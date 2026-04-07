@@ -5,96 +5,563 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>WeHa 07 Boyoz</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-  :root{
-    --bg:#0b0e1a;
-    --ink:#e9ecff;
-    --muted:#aab5ff;
-    --brand:#38d3ff;
-    --card:#131735;
-    --rim:#2b3170;
+  :root {
+    --bg: #080b14;
+    --surface: #0f1420;
+    --surface-raised: #141a2e;
+    --border: rgba(255,255,255,0.08);
+    --ink: #f0f4ff;
+    --muted: #8896b3;
+    --accent: #f97316;
+    --gold: #fbbf24;
+    --player-shmoo: #3b82f6;
+    --player-mittsy: #22c55e;
+    --player-atrain: #f97316;
+    --player-dmac: #ef4444;
+    --player-pjv: #a855f7;
+    --player-roc: #06b6d4;
+    --player-sco: #ec4899;
+    --player-nee: #84cc16;
+    --player-streim: #f59e0b;
+    --player-leikin: #64748b;
   }
-  *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Poppins,system-ui,Segoe UI,Roboto,Arial,sans-serif}
-  a{color:var(--brand);text-decoration:none}
-  .container{max-width:1080px;margin:0 auto;padding:0 20px}
 
-  /* ---------- NAV ---------- */
-  .nav{
-    position:fixed;top:0;left:0;right:0;z-index:50;
-    display:flex;justify-content:space-between;align-items:center;
-    padding:14px 20px;background:linear-gradient(180deg,rgba(10,12,24,.85),rgba(10,12,24,0));
-    backdrop-filter: blur(6px);
-    border-bottom:1px solid rgba(255,255,255,.06);
-  }
-  .brand{font-weight:800;letter-spacing:.5px}
-  .nav a.btn{padding:10px 14px;border-radius:10px;background:#2b3170;color:var(--ink);font-weight:600}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ---------- HERO ---------- */
-  .hero{
-    position:relative;height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;
-    background:#0b0e1a;
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Poppins, system-ui, sans-serif;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
   }
-  .hero::before{
-    content:"";position:absolute;inset:0;
-    background:var(--hero-bg) center / 70% auto no-repeat;
-    background-color:#000;
-    filter:grayscale(10%) contrast(1.05) brightness(.9);
+
+  a { color: var(--accent); text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
-  .hero::after{
-    content:"";position:absolute;inset:0;
+
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── NAV ──────────────────────────────────────────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px;
+    background: rgba(8, 11, 20, 0.90);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex; gap: 6px; align-items: center;
+  }
+
+  .nav-links a {
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    min-height: 34px;
+    display: inline-flex; align-items: center;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+    border-color: rgba(249, 115, 22, 0.45);
+    background: rgba(249, 115, 22, 0.08);
+  }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 11px;
+    cursor: pointer;
+    color: var(--ink);
+    font-size: 1.1rem;
+    min-height: 44px; min-width: 44px;
+    align-items: center; justify-content: center;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 57px; left: 0; right: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    padding: 12px 20px 16px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-weight: 600;
+    min-height: 44px;
+    display: flex; align-items: center;
+    transition: color 0.2s, background 0.2s;
+    font-size: 0.95rem;
+  }
+
+  .mobile-menu a:hover {
+    color: var(--accent);
+    background: rgba(249, 115, 22, 0.08);
+  }
+
+  /* ── HERO ─────────────────────────────────────────── */
+  .hero {
+    padding: 124px 20px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
     background:
-      radial-gradient(1200px 500px at 50% -10%, rgba(41,51,140,.75) 0%, rgba(41,51,140,0) 65%),
-      linear-gradient(180deg, rgba(10,12,24,.25) 0%, #0b0e1a 75%);
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 59px,
+        rgba(255,255,255,0.025) 60px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 59px,
+        rgba(255,255,255,0.025) 60px
+      ),
+      var(--bg);
   }
-  .hero-inner{position:relative;z-index:2;padding:0 20px;transform: translateY(18vh);}
-  .tag{display:inline-block;padding:7px 12px;border:1px solid rgba(255,255,255,.2);border-radius:999px;color:var(--muted);font-size:.9rem;background:rgba(20,24,58,.45)}
-  h1{font-size:clamp(36px,8vw,80px);line-height:1.02;margin:16px 0 6px;font-weight:800;text-shadow:0 8px 40px rgba(0,0,0,.6)}
-  .glow{color:#fff; text-shadow:0 0 22px rgba(56,211,255,.55), 0 0 44px rgba(56,211,255,.35)}
-  .sub{opacity:.9;font-size:clamp(16px,2.2vw,20px)}
-  .cta{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-  .btn{cursor:pointer;border:none;border-radius:14px;padding:12px 18px;font-weight:700}
-  .btn.primary{background:var(--brand);color:#001022}
-  .btn.ghost{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--ink)}
 
-  /* wave divider */
-  .wave{display:block;height:84px;margin-top:-84px}
-  .wave svg{display:block;width:100%;height:100%}
-
-  /* ---------- SECTIONS / CARDS ---------- */
-  main{background:linear-gradient(180deg,#0b0e1a 0%, #0f1330 100%)}
-  section{padding:54px 0}
-  .card{
-    background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-    border:1px solid var(--rim); border-radius:20px; padding:26px;
-    box-shadow:0 22px 50px rgba(0,0,0,.28);
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px; height: 320px;
+    border: 1px solid rgba(255,255,255,0.035);
+    border-radius: 50%;
+    pointer-events: none;
   }
-  h2{margin:0 0 8px;font-size:clamp(24px,3.2vw,30px)}
-  .muted{color:var(--muted)}
+
+  .hero-inner { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(54px, 10vw, 104px);
+    line-height: 1;
+    letter-spacing: 3px;
+    color: var(--ink);
+    text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: clamp(15px, 2vw, 18px);
+    margin-top: 10px;
+  }
+
+  .cta {
+    margin-top: 30px;
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  }
+
+  /* ── BUTTONS ──────────────────────────────────────── */
+  .btn {
+    cursor: pointer; border: none; border-radius: 12px;
+    padding: 12px 24px; font-weight: 700; font-family: inherit;
+    font-size: 0.95rem; min-height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: opacity 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.ghost {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid var(--border);
+    color: var(--ink);
+  }
+
+  /* ── SECTION LAYOUT ───────────────────────────────── */
+  main { background: var(--bg); }
+  section { padding: 60px 0; }
+
+  .section-header { text-align: center; margin-bottom: 34px; }
+
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: 1.5px;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .section-header p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ── CARD ─────────────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+  }
+
+  /* ── THE LEAGUE ───────────────────────────────────── */
+  .league-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  .player-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 18px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .player-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+  }
+
+  .player-card-top { height: 4px; }
+
+  .player-avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    margin: 16px auto 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.45rem;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .player-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .player-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .player-titles {
+    font-size: 0.73rem;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* ── QUIZ ─────────────────────────────────────────── */
+  .quiz-progress {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    min-height: 1.2em;
+  }
+
+  .quiz-question {
+    font-size: 1.08rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.45;
+  }
+
+  .quiz-options {
+    display: flex; flex-direction: column; gap: 10px;
+    max-width: 480px; margin: 0 auto;
+  }
+
+  .quiz-option {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--ink);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 48px;
+    text-align: left;
+    width: 100%;
+    transition: background 0.18s, border-color 0.18s, transform 0.15s;
+  }
+  .quiz-option:hover {
+    background: rgba(249,115,22,0.1);
+    border-color: rgba(249,115,22,0.4);
+    transform: translateX(4px);
+  }
+
+  .result-card {
+    border-radius: 18px;
+    padding: 36px 28px;
+    text-align: center;
+    border: 1px solid;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .result-emoji {
+    font-size: 3.2rem;
+    display: block;
+    margin-bottom: 14px;
+    animation: bounce 0.7s ease;
+  }
+
+  .result-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.2rem;
+    line-height: 1;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+  }
+
+  .result-sub {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateY(0) scale(1); }
+    30%     { transform: translateY(-14px) scale(1.1); }
+    60%     { transform: translateY(-5px) scale(1.03); }
+  }
+
+  /* ── WHEEL ────────────────────────────────────────── */
+  .wheel-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 22px 0 4px;
+  }
+
+  .pointer-triangle {
+    width: 0; height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 28px solid var(--accent);
+    margin-bottom: -5px;
+    z-index: 2;
+    position: relative;
+    filter: drop-shadow(0 3px 8px rgba(249,115,22,0.55));
+  }
+
+  #wheel-svg {
+    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    display: block;
+    border-radius: 50%;
+    overflow: visible;
+  }
+
+  #winner {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 1.5px;
+    margin-top: 16px;
+    min-height: 2.8rem;
+    transition: color 0.3s;
+  }
+
+  /* ── HALL OF CHAMPIONS ────────────────────────────── */
+  .champions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .champion-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 18px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .champion-card-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .champion-trophy {
+    font-size: 1.3rem;
+    position: absolute;
+    top: 14px; right: 14px;
+  }
+
+  .champion-season {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--muted);
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .champion-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    margin-top: 4px;
+  }
+
+  .champion-runner {
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-top: 6px;
+  }
+
+  .champion-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--gold);
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── HALL OF WINGMASTERS ──────────────────────────── */
+  .stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .stats-table thead th {
+    padding: 8px 14px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .stats-table tbody td {
+    padding: 14px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+  }
+
+  .stats-table tbody tr:hover td {
+    background: rgba(255,255,255,0.03);
+  }
+
+  .stats-table tbody tr:last-child td { border-bottom: none; }
+
+  /* ── FOOTER ───────────────────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  footer a { color: var(--accent); }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .league-grid { grid-template-columns: repeat(3, 1fr); }
+    .champions-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .league-grid { grid-template-columns: repeat(2, 1fr); }
+    .champions-grid { grid-template-columns: 1fr; }
+    .hero { padding: 96px 20px 60px; }
+    section { padding: 44px 0; }
+    .card { padding: 22px 18px; }
+  }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<div class="nav">
-  <div class="brand">WEHA 07 BOYOZ</div>
-  <div>
-    <a href="/play.html" class="btn">Guess Who?</a>
-    <a href="#quiz-section" class="btn">Quiz</a>
-    <a href="#wheel-section" class="btn">Wheel</a>
-    <!-- <a href="#history-section" class="btn">History</a> -->
-    <a href="#wingmasters-section" class="btn">Wingmasters</a>
+<nav class="nav" aria-label="Main navigation">
+  <a href="#top" class="nav-logo">🏀 WEHA 07 BOYOZ</a>
+  <div class="nav-links">
+    <a href="/play.html">Guess Who?</a>
+    <a href="#league-section">The League</a>
+    <a href="#quiz-section">Quiz</a>
+    <a href="#wheel-section">Wheel</a>
+    <a href="#history-section">Champions</a>
+    <a href="#wingmasters-section">Wingmasters</a>
   </div>
+  <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="/play.html">Guess Who?</a>
+  <a href="#league-section">The League</a>
+  <a href="#quiz-section">Quiz</a>
+  <a href="#wheel-section">Wheel</a>
+  <a href="#history-section">Champions</a>
+  <a href="#wingmasters-section">Wingmasters</a>
 </div>
 
 <!-- HERO -->
 <header class="hero" id="top">
   <div class="hero-inner container">
-    <span class="tag">OFFICIAL FANTASY BBALL SITE</span>
-    <h1><span class="glow">Pseudoscience Center</span></h1>
-    <p class="sub">Brought to you by Shmoo, Gunner, and Mr Mitt.</p>
+    <span class="hero-eyebrow">🏀 Fantasy League · Est. 2017</span>
+    <h1 class="hero-title">WeHa 07 Boyoz</h1>
+    <p class="hero-sub">Pseudoscience Center</p>
     <div class="cta">
       <a href="#quiz-section" class="btn primary">Take the Quiz</a>
       <a href="#wheel-section" class="btn ghost">Spin the Wheel</a>
@@ -102,96 +569,95 @@
   </div>
 </header>
 
-<!-- Wave divider -->
-<div class="wave">
-  <svg viewBox="0 0 1440 84" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path fill="#0f1330" d="M0,64L80,58.7C160,53,320,43,480,42.7C640,43,800,53,960,64C1120,75,1280,85,1360,90.7L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"/>
-  </svg>
-</div>
-
 <main>
   <div class="container">
+
+    <!-- THE LEAGUE -->
+    <section id="league-section">
+      <div class="section-header">
+        <h2>The League</h2>
+        <p>10 managers. 1 trophy. Endless trash talk.</p>
+      </div>
+      <div class="league-grid" id="league-grid"></div>
+    </section>
 
     <!-- QUIZ -->
     <section id="quiz-section">
       <div class="card">
-        <div class="section-title"><span class="dot"></span><h2>😜 Who Are You Most Like?</h2><span class="dot"></span></div>
-        <p class="muted" style="text-align:center;margin-top:6px">Answer a few questions to see if you’re D Mac, Shmoo, or Mr Mitt.</p>
-        <div id="quiz" style="margin-top:18px"></div>
-        <div id="result" style="margin-top:16px;font-size:1.2rem;"></div>
+        <div class="section-header" style="margin-bottom:22px">
+          <h2>😜 Who Are You Most Like?</h2>
+          <p>Answer 3 questions to see if you're D Mac, Shmoo, or Mr Mitt.</p>
+        </div>
+        <div class="quiz-progress" id="quiz-progress">Question 1 of 3</div>
+        <div id="quiz"></div>
+        <div id="result"></div>
       </div>
     </section>
 
     <!-- WHEEL -->
     <section id="wheel-section">
       <div class="card" style="text-align:center">
-        <div class="section-title"><span class="dot"></span><h2>🎡 Championship Decider</h2><span class="dot"></span></div>
-        <p class="muted">Tap spin and let fate crown the champ.</p>
-        <div class="wheel-wrap">
-          <div class="pointer">🔺</div>
-          <div id="wheel"></div>
+        <div class="section-header" style="margin-bottom:22px">
+          <h2>🎡 Championship Decider</h2>
+          <p>Tap spin and let fate crown the champ.</p>
         </div>
-        <div class="legend">Red = D Mac · Blue = Shmoo · Green = Mr Mitt</div>
-        <div style="height:14px"></div>
+        <div class="wheel-wrap">
+          <div class="pointer-triangle" aria-hidden="true"></div>
+          <svg id="wheel-svg" width="300" height="300" viewBox="0 0 300 300" aria-label="Spin wheel with three segments: D Mac, Shmoo, Mittsy"></svg>
+        </div>
+        <div style="height:18px"></div>
         <button class="btn primary" onclick="spinWheel()">Spin</button>
-        <div id="winner" style="margin-top:16px;font-weight:700"></div>
+        <div id="winner" aria-live="polite"></div>
       </div>
     </section>
 
-    <!-- ===== Temporarily disabled: Hall of Champions =====
+    <!-- HALL OF CHAMPIONS -->
     <section id="history-section">
-      <div class="card" style="text-align:center">
-        <div class="section-title">
-          <span class="dot"></span><h2>🏆 Hall of Champions</h2><span class="dot"></span>
+      <div class="card">
+        <div class="section-header" style="margin-bottom:22px">
+          <h2>🏆 Hall of Champions</h2>
+          <p>All-time winners &amp; finals results</p>
         </div>
-        <p class="muted">All-time winners & finals results</p>
         <div id="history"></div>
       </div>
     </section>
-    ===== End of Hall of Champions ===== -->
 
-    <!-- 🍗 HALL OF WINGMASTERS -->
+    <!-- HALL OF WINGMASTERS -->
     <section id="wingmasters-section">
-      <div class="card" style="text-align:center">
-        <div class="section-title">
-          <span class="dot"></span><h2>🍗 Hall of Wingmasters</h2><span class="dot"></span>
+      <div class="card">
+        <div class="section-header" style="margin-bottom:22px">
+          <h2>🍗 Hall of Wingmasters</h2>
+          <p>The eternal wing-eating leaderboard</p>
         </div>
-
-        <div style="overflow:auto; margin-top:12px">
-          <table style="width:100%; border-collapse:collapse; text-align:left;">
+        <div style="overflow-x:auto">
+          <table class="stats-table">
             <thead>
               <tr>
-                <th style="padding:10px 8px; border-bottom:1px solid var(--rim)">Wingmaster</th>
-                <th style="padding:10px 8px; border-bottom:1px solid var(--rim)"># Wings Eaten</th>
-                <th style="padding:10px 8px; border-bottom:1px solid var(--rim)">Yogurt Consumption</th>
-                <th style="padding:10px 8px; border-bottom:1px solid var(--rim)">Shame Level</th>
-                <th style="padding:10px 8px; border-bottom:1px solid var(--rim)">Answers to Sean ‘Mittsy’ Evans</th>
+                <th>Wingmaster</th>
+                <th># Wings Eaten</th>
+                <th>Yogurt Consumption</th>
+                <th>Shame Level</th>
+                <th>Answers to Sean 'Mittsy' Evans</th>
               </tr>
             </thead>
             <tbody>
-              <!-- Train FIRST -->
-              <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
-                <td style="padding:10px 8px"><b>Train</b></td>
-                <td style="padding:10px 8px">?</td>
-                <td style="padding:10px 8px">?</td>
-                <td style="padding:10px 8px">?</td>
-                <td style="padding:10px 8px">?</td>
-              </tr>
-
-              <!-- Gunner SECOND (updated values) -->
               <tr>
-                <td style="padding:10px 8px"><b>Gunner</b></td>
-                <td style="padding:10px 8px">All</td>
-                <td style="padding:10px 8px">99</td>
-                <td style="padding:10px 8px">0</td>
-                <td style="padding:10px 8px">A+</td>
+                <td><strong>Train</strong></td>
+                <td>?</td>
+                <td>?</td>
+                <td>?</td>
+                <td>?</td>
+              </tr>
+              <tr>
+                <td><strong>Gunner</strong></td>
+                <td>All</td>
+                <td>99</td>
+                <td>0</td>
+                <td>A+</td>
               </tr>
             </tbody>
           </table>
-
-          <p class="muted" style="margin-top:10px; font-style:italic; opacity:.8;">
-            🔥 Pending evaluation
-          </p>
+          <p style="margin-top:14px; font-size:0.85rem; color:var(--muted); font-style:italic">🔥 Pending evaluation</p>
         </div>
       </div>
     </section>
@@ -200,72 +666,37 @@
 </main>
 
 <footer>
-  Built with ❤️ on GitHub Pages and Sagu Polate • <a href="https://weha07boyoz.com">weha07boyoz.com</a>
+  Built with ❤️ on GitHub Pages and Sagu Polate &bull; <a href="https://weha07boyoz.com">weha07boyoz.com</a>
 </footer>
 
-<!-- ===== Scripts (quiz/wheel/history + hero image) ===== -->
+<!-- ===== Scripts ===== -->
 <script>
-  /* Smooth anchor scroll */
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click',e=>{
-      const id=a.getAttribute('href').slice(1);
-      const el=document.getElementById(id);
-      if(el){ e.preventDefault(); window.scrollTo({top:el.offsetTop-60,behavior:'smooth'}); }
+  /* ── Hamburger menu ─────────────────────────────── */
+  const hamburger = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.textContent = open ? '✕' : '☰';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.textContent = '☰';
     });
   });
 
-  /* Quiz */
-  const quizData = [
-    { q:"What's your go-to move on game day?",
-      options:{ "D Mac":"Crush it with energy 💪", "Shmoo":"Keep it chill 😎", "Mr Mitt":"Make a sneaky play 🤔" } },
-    { q:"Favorite hangout spot?",
-      options:{ "D Mac":"The gym 🏋️", "Shmoo":"Anywhere with snacks 🍕", "Mr Mitt":"Library (secret study mode) 📚" } },
-    { q:"Pick your hype song:",
-      options:{ "D Mac":"Eye of the Tiger 🎶", "Shmoo":"Don’t Worry Be Happy 🎵", "Mr Mitt":"Lose Yourself 🎧" } },
-  ];
-  let scores = { "D Mac":0, "Shmoo":0, "Mr Mitt":0 }, currentQ = 0;
-  function renderQuestion(){
-    const box=document.getElementById("quiz");
-    if(currentQ>=quizData.length){ showResult(); return; }
-    const q=quizData[currentQ];
-    let html=`<h3 style="text-align:center">${q.q}</h3><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">`;
-    Object.entries(q.options).forEach(([who,text])=>{
-      html+=`<button class="btn" style="background:#2b3170;color:var(--ink)" onclick="pick('${who}')">${text}</button>`;
+  /* ── Smooth anchor scroll ───────────────────────── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) { e.preventDefault(); window.scrollTo({ top: el.offsetTop - 64, behavior: 'smooth' }); }
     });
-    html+='</div>';
-    box.innerHTML=html;
-  }
-  function pick(who){ scores[who]++; currentQ++; renderQuestion(); }
-  function showResult(){
-    const winner=Object.keys(scores).reduce((a,b)=>scores[a]>scores[b]?a:b);
-    document.getElementById("quiz").innerHTML="";
-    document.getElementById("result").textContent=`🎉 You are most like ${winner}!`;
-  }
-  renderQuestion();
+  });
 
-  /* Wheel */
-  let currentRotation=0;
-  const players=["D Mac","Shmoo","Mr Mitt"];
-  function spinWheel(){
-    const wheel=document.getElementById("wheel");
-    const out=document.getElementById("winner");
-    out.textContent="";
-    const extra=Math.floor(Math.random()*360);
-    const spins=1080;
-    const final=currentRotation+spins+extra;
-    wheel.style.transform=`rotate(${final}deg)`;
-    currentRotation=final;
-    setTimeout(()=>{
-      const deg=((final%360)+360)%360;
-      let winner;
-      if(deg<120) winner=players[0];
-      else if(deg<240) winner=players[1];
-      else winner=players[2];
-      out.textContent=`🏆 Winner: ${winner}!`;
-    },4000);
-  }
-
-  /* History (safe to keep; it exits if #history not present) */
+  /* ── History data ───────────────────────────────── */
   const HISTORY = [
     { season: 2017, champion: "Shmoo",   runnerUp: "D Mac",   score: "142–121" },
     { season: 2018, champion: "Mr Mitt", runnerUp: "Shmoo",   score: "128–122" },
@@ -275,44 +706,189 @@
     { season: 2022, champion: "Mr Mitt", runnerUp: "Shmoo",   score: "134–127" },
     { season: 2023, champion: "D Mac",   runnerUp: "Gunner",  score: "139–130" },
   ];
+
+  /* ── Player roster ──────────────────────────────── */
+  const PLAYERS = [
+    { key: "shmoo",  name: "Shmoo",  historyName: "Shmoo",   color: "#3b82f6", img: null,             imgAlt: null },
+    { key: "mittsy", name: "Mittsy", historyName: "Mr Mitt", color: "#22c55e", img: "Mr_Mitt.png",    imgAlt: "Mittsy avatar" },
+    { key: "atrain", name: "Atrain", historyName: null,       color: "#f97316", img: null,             imgAlt: null },
+    { key: "dmac",   name: "D Mac",  historyName: "D Mac",   color: "#ef4444", img: null,             imgAlt: null },
+    { key: "pjv",    name: "PJV",    historyName: null,       color: "#a855f7", img: "PJV.png",        imgAlt: "PJV avatar" },
+    { key: "roc",    name: "Roc",    historyName: null,       color: "#06b6d4", img: null,             imgAlt: null },
+    { key: "sco",    name: "Sco",    historyName: null,       color: "#ec4899", img: null,             imgAlt: null },
+    { key: "nee",    name: "Nee",    historyName: null,       color: "#84cc16", img: null,             imgAlt: null },
+    { key: "streim", name: "Streim", historyName: null,       color: "#f59e0b", img: null,             imgAlt: null },
+    { key: "leikin", name: "Leikin", historyName: null,       color: "#64748b", img: "A_Leikin.png",   imgAlt: "Leikin avatar" },
+  ];
+
+  /* ── The League grid ────────────────────────────── */
+  const titleCounts = {};
+  HISTORY.forEach(r => { titleCounts[r.champion] = (titleCounts[r.champion] || 0) + 1; });
+
+  function renderLeague() {
+    const grid = document.getElementById('league-grid');
+    grid.innerHTML = PLAYERS.map(p => {
+      const n = p.historyName ? (titleCounts[p.historyName] || 0) : 0;
+      const titleText = n === 1 ? '1 title' : `${n} title${n !== 1 ? 's' : ''}`;
+      const initials = p.name.replace(/[^A-Za-z ]/g, '').trim().split(' ')
+        .map(w => w[0]).slice(0, 2).join('').toUpperCase();
+
+      const avatarHtml = p.img
+        ? `<div class="player-avatar"><img src="${p.img}" alt="${p.imgAlt}" loading="lazy"></div>`
+        : `<div class="player-avatar" style="background:${p.color}22;color:${p.color}">${initials}</div>`;
+
+      return `<div class="player-card">
+        <div class="player-card-top" style="background:${p.color}"></div>
+        ${avatarHtml}
+        <div class="player-name">${p.name}</div>
+        <div class="player-titles">${titleText}</div>
+      </div>`;
+    }).join('');
+  }
+  renderLeague();
+
+  /* ── Quiz ───────────────────────────────────────── */
+  const quizData = [
+    { q: "What's your go-to move on game day?",
+      options: { "D Mac": "Crush it with energy 💪", "Shmoo": "Keep it chill 😎", "Mr Mitt": "Make a sneaky play 🤔" } },
+    { q: "Favorite hangout spot?",
+      options: { "D Mac": "The gym 🏋️", "Shmoo": "Anywhere with snacks 🍕", "Mr Mitt": "Library (secret study mode) 📚" } },
+    { q: "Pick your hype song:",
+      options: { "D Mac": "Eye of the Tiger 🎶", "Shmoo": "Don't Worry Be Happy 🎵", "Mr Mitt": "Lose Yourself 🎧" } },
+  ];
+  const quizColors = { "D Mac": "#ef4444", "Shmoo": "#3b82f6", "Mr Mitt": "#22c55e" };
+
+  let scores = { "D Mac": 0, "Shmoo": 0, "Mr Mitt": 0 }, currentQ = 0;
+
+  function renderQuestion() {
+    const box = document.getElementById("quiz");
+    const prog = document.getElementById("quiz-progress");
+    if (currentQ >= quizData.length) { showResult(); return; }
+    prog.textContent = `Question ${currentQ + 1} of ${quizData.length}`;
+    const q = quizData[currentQ];
+    let html = `<p class="quiz-question">${q.q}</p><div class="quiz-options">`;
+    Object.entries(q.options).forEach(([who, text]) => {
+      html += `<button class="quiz-option" onclick="pick('${who}')">${text}</button>`;
+    });
+    html += '</div>';
+    box.innerHTML = html;
+  }
+
+  function pick(who) { scores[who]++; currentQ++; renderQuestion(); }
+
+  function showResult() {
+    const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+    const color = quizColors[winner] || '#f97316';
+    document.getElementById("quiz-progress").textContent = "";
+    document.getElementById("quiz").innerHTML = "";
+    document.getElementById("result").innerHTML = `
+      <div class="result-card" style="background:${color}18;border-color:${color}44">
+        <span class="result-emoji">🎉</span>
+        <div class="result-name" style="color:${color}">${winner}</div>
+        <p class="result-sub">That's your fantasy archetype.</p>
+        <button class="btn primary" onclick="resetQuiz()" style="background:${color}">Play Again</button>
+      </div>`;
+  }
+
+  function resetQuiz() {
+    scores = { "D Mac": 0, "Shmoo": 0, "Mr Mitt": 0 };
+    currentQ = 0;
+    document.getElementById("result").innerHTML = "";
+    renderQuestion();
+  }
+
+  renderQuestion();
+
+  /* ── Wheel ──────────────────────────────────────── */
+  const wheelPlayers = [
+    { name: "D Mac",  color: "#ef4444" },
+    { name: "Shmoo",  color: "#3b82f6" },
+    { name: "Mittsy", color: "#22c55e" },
+  ];
+
+  function polarToCartesian(cx, cy, r, angleDeg) {
+    const rad = (angleDeg * Math.PI) / 180;
+    return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+  }
+
+  function buildWheel() {
+    const svg = document.getElementById('wheel-svg');
+    const cx = 150, cy = 150, r = 140;
+    const n = wheelPlayers.length;
+    const segAngle = 360 / n;
+    let html = '';
+
+    wheelPlayers.forEach((p, i) => {
+      const startDeg = i * segAngle - 90;
+      const endDeg   = startDeg + segAngle;
+      const start = polarToCartesian(cx, cy, r, startDeg);
+      const end   = polarToCartesian(cx, cy, r, endDeg);
+      const largeArc = segAngle > 180 ? 1 : 0;
+      const pathD = `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} 1 ${end.x} ${end.y} Z`;
+
+      const midDeg = startDeg + segAngle / 2;
+      const lp = polarToCartesian(cx, cy, r * 0.62, midDeg);
+
+      html += `<path d="${pathD}" fill="${p.color}" opacity="0.9" stroke="#080b14" stroke-width="2.5"/>`;
+      html += `<text x="${lp.x}" y="${lp.y}" text-anchor="middle" dominant-baseline="middle"
+                 font-family="'Bebas Neue',sans-serif" font-size="17" fill="#fff" letter-spacing="0.5">${p.name}</text>`;
+    });
+
+    html += `<circle cx="${cx}" cy="${cy}" r="22" fill="#080b14" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>`;
+    svg.innerHTML = html;
+  }
+
+  buildWheel();
+
+  let currentRotation = 0;
+  function spinWheel() {
+    const svg = document.getElementById('wheel-svg');
+    const out = document.getElementById('winner');
+    out.textContent = '';
+    out.style.color = '';
+    const extra = Math.floor(Math.random() * 360);
+    const totalDeg = currentRotation + 1080 + extra;
+    svg.style.transform = `rotate(${totalDeg}deg)`;
+    currentRotation = totalDeg;
+    setTimeout(() => {
+      const norm = (((-totalDeg) % 360) + 360) % 360;
+      const idx = Math.floor(norm / (360 / wheelPlayers.length)) % wheelPlayers.length;
+      const winner = wheelPlayers[idx];
+      out.textContent = `🏆 ${winner.name}`;
+      out.style.color = winner.color;
+    }, 4000);
+  }
+
+  /* ── Hall of Champions ──────────────────────────── */
   function renderHistory() {
     const el = document.getElementById("history");
     if (!el) return;
-    const totalsMap = {};
-    HISTORY.forEach(r => totalsMap[r.champion] = (totalsMap[r.champion] || 0) + 1);
-    const totalsLine = Object.entries(totalsMap).sort((a,b)=>b[1]-a[1]).map(([n,c]) => `${n}: ${c}`).join(" · ");
-    const rows = [...HISTORY].sort((a,b)=>b.season-a.season).map(r => `
-      <tr style="border-bottom:1px solid rgba(255,255,255,.06)">
-        <td style="padding:10px 8px">${r.season}</td>
-        <td style="padding:10px 8px"><b>${r.champion}</b> 🥇</td>
-        <td style="padding:10px 8px">${r.runnerUp || "-"}</td>
-        <td style="padding:10px 8px">${r.score || "-"}</td>
-      </tr>`).join("");
-    el.innerHTML = `
-      <div style="overflow:auto">
-        <table style="width:100%; border-collapse:collapse; text-align:left;">
-          <thead>
-            <tr>
-              <th style="padding:10px 8px; border-bottom:1px solid var(--rim)">Season</th>
-              <th style="padding:10px 8px; border-bottom:1px solid var(--rim)">Champion</th>
-              <th style="padding:10px 8px; border-bottom:1px solid var(--rim)">Runner-up</th>
-              <th style="padding:10px 8px; border-bottom:1px solid var(--rim)">Final</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-      <div style="margin-top:10px; font-size:.95rem; opacity:.85">🏅 Total titles — ${totalsLine}</div>`;
+    const champColors = {
+      "Shmoo": "#3b82f6", "Mr Mitt": "#22c55e",
+      "D Mac": "#ef4444", "Gunner": "#f59e0b"
+    };
+    const cards = [...HISTORY].sort((a, b) => b.season - a.season).map(r => {
+      const color = champColors[r.champion] || '#f97316';
+      return `<div class="champion-card">
+        <div class="champion-card-bar" style="background:${color}"></div>
+        <div class="champion-trophy" aria-hidden="true">🏆</div>
+        <div class="champion-season">${r.season}</div>
+        <div class="champion-name" style="color:${color}">${r.champion}</div>
+        <div class="champion-runner">Runner-up: ${r.runnerUp || '—'}</div>
+        <div class="champion-score">${r.score || ''}</div>
+      </div>`;
+    }).join('');
+    el.innerHTML = `<div class="champions-grid">${cards}</div>`;
   }
   renderHistory();
 
-  /* Random hero background (your images in repo root) */
-  const heroImages = ["Klay_Lowlow.jpg", "Galactic_Pantz.jpg", "Mr_Mitt.png", "A_Leikin.png","Mr_Mitt2.png","PJV.png"];
-  const chosen = heroImages[Math.floor(Math.random()*heroImages.length)];
+  /* ── Random hero background ─────────────────────── */
+  const heroImages = ["Galactic_Pantz.jpg", "Mr_Mitt.png", "A_Leikin.png", "Mr_Mitt2.png", "PJV.png"];
+  const chosen = heroImages[Math.floor(Math.random() * heroImages.length)];
   document.documentElement.style.setProperty('--hero-bg', `url("${chosen}")`);
 </script>
 
-<!-- Firebase core + Firestore SDK -->
+<!-- Firebase core + Firestore SDK (v10.12.4) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
   import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
@@ -334,11 +910,6 @@
     if (docSnap.exists()) {
       const data = docSnap.data();
       console.log("🔥 Live data from Firestore:", data);
-      document.body.insertAdjacentHTML("afterbegin",
-        `<div style="position:fixed;top:0;left:0;background:green;color:white;padding:4px;z-index:9999">
-           Game question: ${data.question} — Image: ${data.currentImage}
-         </div>`
-      );
     } else {
       console.log("No such document!");
     }
