@@ -710,15 +710,15 @@
   /* ── Player roster ──────────────────────────────── */
   const PLAYERS = [
     { key: "shmoo",  name: "Shmoo",  historyName: "Shmoo",   color: "#3b82f6", img: null,             imgAlt: null },
-    { key: "mittsy", name: "Mittsy", historyName: "Mr Mitt", color: "#22c55e", img: "Mr_Mitt.png",    imgAlt: "Mittsy avatar" },
+    { key: "mittsy", name: "Mittsy", historyName: "Mr Mitt", color: "#22c55e", img: "images/players/Mr_Mitt.png",    imgAlt: "Mittsy avatar" },
     { key: "atrain", name: "Atrain", historyName: null,       color: "#f97316", img: null,             imgAlt: null },
     { key: "dmac",   name: "D Mac",  historyName: "D Mac",   color: "#ef4444", img: null,             imgAlt: null },
-    { key: "pjv",    name: "PJV",    historyName: null,       color: "#a855f7", img: "PJV.png",        imgAlt: "PJV avatar" },
+    { key: "pjv",    name: "PJV",    historyName: null,       color: "#a855f7", img: "images/players/PJV.png",        imgAlt: "PJV avatar" },
     { key: "roc",    name: "Roc",    historyName: null,       color: "#06b6d4", img: null,             imgAlt: null },
     { key: "sco",    name: "Sco",    historyName: null,       color: "#ec4899", img: null,             imgAlt: null },
     { key: "nee",    name: "Nee",    historyName: null,       color: "#84cc16", img: null,             imgAlt: null },
     { key: "streim", name: "Streim", historyName: null,       color: "#f59e0b", img: null,             imgAlt: null },
-    { key: "leikin", name: "Leikin", historyName: null,       color: "#64748b", img: "A_Leikin.png",   imgAlt: "Leikin avatar" },
+    { key: "leikin", name: "Leikin", historyName: null,       color: "#64748b", img: "images/players/A_Leikin.png",   imgAlt: "Leikin avatar" },
   ];
 
   /* ── The League grid ────────────────────────────── */
@@ -883,7 +883,7 @@
   renderHistory();
 
   /* ── Random hero background ─────────────────────── */
-  const heroImages = ["Galactic_Pantz.jpg", "Mr_Mitt.png", "A_Leikin.png", "Mr_Mitt2.png", "PJV.png"];
+  const heroImages = ["images/players/Galactic_Pantz.jpg", "images/players/Mr_Mitt.png", "images/players/A_Leikin.png", "images/players/Mr_Mitt2.png", "images/players/PJV.png"];
   const chosen = heroImages[Math.floor(Math.random() * heroImages.length)];
   document.documentElement.style.setProperty('--hero-bg', `url("${chosen}")`);
 </script>

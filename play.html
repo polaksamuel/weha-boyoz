@@ -338,7 +338,7 @@ const jsonOut=document.getElementById('jsonOut');
 const pageList = document.getElementById('pageList');
 
 if (isDev){
-  const opts = Array.from({length:60},(_,i)=>`page${String(i+1).padStart(2,'0')}.png`);
+  const opts = Array.from({length:60},(_,i)=>`images/pages/page${String(i+1).padStart(2,'0')}.png`);
   pageList.innerHTML = opts.map(p=>`<option value="${p}">`).join('');
   devPageUrl.setAttribute('list','pageList');
 
