@@ -174,8 +174,17 @@ let ticker = null;
 
 function resolveUrl(s){
   if (!s) return "";
-  if (/^https?:\/\//i.test(s)) return s;
-  return `https://weha07boyoz.com/${s.replace(/^\/+/,'')}`;
+  // Normalise full URLs pointing to the old flat root — rewrite to new images/pages/ path
+  if (/^https?:\/\//i.test(s)) {
+    return s.replace(
+      /^(https:\/\/weha07boyoz\.com\/)((?:fail)?[Pp]age\d[^?#]*)/,
+      '$1images/pages/$2'
+    );
+  }
+  // Bare filename: route page/failpage images to their subdirectory
+  const clean = s.replace(/^\/+/, '');
+  const prefix = /^(?:fail)?[Pp]age\d/i.test(clean) ? 'images/pages/' : '';
+  return `https://weha07boyoz.com/${prefix}${clean}`;
 }
 function loadImage(url){
   return new Promise((res,rej)=>{
