@@ -174,17 +174,18 @@ let ticker = null;
 
 function resolveUrl(s){
   if (!s) return "";
-  // Normalise full URLs pointing to the old flat root — rewrite to new images/pages/ path
+  // For full URLs: if it's our domain, extract the path and re-resolve so we
+  // can apply the subdirectory routing below. External URLs pass through as-is.
   if (/^https?:\/\//i.test(s)) {
-    return s.replace(
-      /^(https:\/\/weha07boyoz\.com\/)((?:fail)?[Pp]age\d[^?#]*)/,
-      '$1images/pages/$2'
-    );
+    if (!/weha07boyoz\.com/i.test(s)) return s;
+    try { s = new URL(s).pathname; } catch(e) { return s; }
   }
-  // Bare filename: route page/failpage images to their subdirectory
-  const clean = s.replace(/^\/+/, '');
-  const prefix = /^(?:fail)?[Pp]age\d/i.test(clean) ? 'images/pages/' : '';
-  return `https://weha07boyoz.com/${prefix}${clean}`;
+  const path = s.replace(/^\/+/, '');
+  // Page/failpage images now live in images/pages/; don't double-prefix.
+  if (/^(?:fail)?page\d/i.test(path)) {
+    return `https://weha07boyoz.com/images/pages/${path}`;
+  }
+  return `https://weha07boyoz.com/${path}`;
 }
 function loadImage(url){
   return new Promise((res,rej)=>{
