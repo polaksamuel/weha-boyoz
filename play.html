@@ -31,9 +31,53 @@
   #devBox input[type="range"]{width:100%}
   #jsonOut{background:#0a0f24;border:1px solid #2b3170;color:#c9f0ff;padding:10px;border-radius:8px;overflow:auto;font:12px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
   #dbg{position:fixed;left:10px;bottom:10px;background:#0a0f24;border:1px solid #335;padding:8px 10px;border-radius:10px;max-width:70vw;font:12px/1.35 monospace;color:#9fe;opacity:.92;display:none}
+  /* ── GAMES SUB-NAV ────────────────────────────────── */
+  .games-subnav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: #0f1430;
+    border-bottom: 1px solid #2b3170;
+    padding: 0 20px;
+    display: flex;
+    gap: 4px;
+    height: 44px;
+    align-items: center;
+  }
+
+  .games-subnav a {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #8896b3;
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    white-space: nowrap;
+  }
+
+  .games-subnav a:hover {
+    color: #e9ecff;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .games-subnav a.active {
+    color: #38d3ff;
+    background: rgba(56,211,255,0.1);
+  }
+
+  body { padding-top: 60px; }
 </style>
 </head>
 <body>
+
+<!-- GAMES SUB-NAV -->
+<div class="games-subnav">
+  <a href="/play.html" class="active">🧩 Guess Who?</a>
+  <a href="/quiz.html">😜 Quiz</a>
+  <a href="/wheel.html">🎡 Wheel</a>
+</div>
+
 <div class="wrap">
   <h1>🧩 Guess Who?</h1>
   <div class="card">

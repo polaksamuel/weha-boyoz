@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WeHa 07 Boyoz – Quiz</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<script>
+  (function() {
+    if (localStorage.getItem('theme') !== 'dark')
+      document.documentElement.setAttribute('data-theme', 'light');
+  })();
+</script>
+
+<style>
+  :root {
+    --bg: #080b14;
+    --surface: #0f1420;
+    --surface-raised: #141a2e;
+    --border: rgba(255,255,255,0.08);
+    --ink: #f0f4ff;
+    --muted: #8896b3;
+    --accent: #f97316;
+    --gold: #fbbf24;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Poppins, system-ui, sans-serif;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── NAV ──────────────────────────────────────────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px;
+    background: rgba(8, 11, 20, 0.90);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex; gap: 6px; align-items: center;
+  }
+
+  .nav-links a {
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    min-height: 34px;
+    display: inline-flex; align-items: center;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+    border-color: rgba(249, 115, 22, 0.45);
+    background: rgba(249, 115, 22, 0.08);
+  }
+
+  .nav-links a.active {
+    color: var(--accent);
+    border-color: rgba(249, 115, 22, 0.45);
+  }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 11px;
+    cursor: pointer;
+    color: var(--ink);
+    font-size: 1.1rem;
+    min-height: 44px; min-width: 44px;
+    align-items: center; justify-content: center;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 57px; left: 0; right: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    padding: 12px 20px 16px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-weight: 600;
+    min-height: 44px;
+    display: flex; align-items: center;
+    transition: color 0.2s, background 0.2s;
+    font-size: 0.95rem;
+  }
+
+  .mobile-menu a:hover {
+    color: var(--accent);
+    background: rgba(249, 115, 22, 0.08);
+  }
+
+  /* ── GAMES SUB-NAV ────────────────────────────────── */
+  .games-subnav {
+    position: fixed;
+    top: 57px; left: 0; right: 0;
+    z-index: 98;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    display: flex;
+    gap: 4px;
+    height: 44px;
+    align-items: center;
+  }
+
+  .games-subnav a {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    white-space: nowrap;
+  }
+
+  .games-subnav a:hover {
+    color: var(--ink);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .games-subnav a.active {
+    color: var(--accent);
+    background: rgba(249,115,22,0.1);
+  }
+
+  /* ── BUTTONS ──────────────────────────────────────── */
+  .btn {
+    cursor: pointer; border: none; border-radius: 12px;
+    padding: 12px 24px; font-weight: 700; font-family: inherit;
+    font-size: 0.95rem; min-height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: opacity 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn.primary { background: var(--accent); color: #fff; }
+
+  /* ── SECTION LAYOUT ───────────────────────────────── */
+  main { background: var(--bg); padding-top: 101px; }
+  section { padding: 60px 0; }
+
+  .section-header { text-align: center; margin-bottom: 34px; }
+
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: 1.5px;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .section-header p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ── CARD ─────────────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+  }
+
+  /* ── QUIZ ─────────────────────────────────────────── */
+  .quiz-progress {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    min-height: 1.2em;
+  }
+
+  .quiz-question {
+    font-size: 1.08rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.45;
+  }
+
+  .quiz-options {
+    display: flex; flex-direction: column; gap: 10px;
+    max-width: 480px; margin: 0 auto;
+  }
+
+  .quiz-option {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--ink);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 48px;
+    text-align: left;
+    width: 100%;
+    transition: background 0.18s, border-color 0.18s, transform 0.15s;
+  }
+
+  .quiz-option:hover {
+    background: rgba(249,115,22,0.1);
+    border-color: rgba(249,115,22,0.4);
+    transform: translateX(4px);
+  }
+
+  .result-card {
+    border-radius: 18px;
+    padding: 36px 28px;
+    text-align: center;
+    border: 1px solid;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .result-emoji {
+    font-size: 3.2rem;
+    display: block;
+    margin-bottom: 14px;
+    animation: bounce 0.7s ease;
+  }
+
+  .result-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.2rem;
+    line-height: 1;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+  }
+
+  .result-sub {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateY(0) scale(1); }
+    30%     { transform: translateY(-14px) scale(1.1); }
+    60%     { transform: translateY(-5px) scale(1.03); }
+  }
+
+  /* ── FOOTER ───────────────────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  footer a { color: var(--accent); }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 44px 0; }
+    .card { padding: 22px 18px; }
+  }
+
+  /* ── THEME TOGGLE BUTTON ──────────────────────── */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    min-height: 44px; min-width: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+    line-height: 1;
+    color: var(--muted);
+  }
+
+  .theme-toggle:hover {
+    background: rgba(249,115,22,0.08);
+    border-color: rgba(249,115,22,0.45);
+  }
+
+  /* ── LIGHT MODE ───────────────────────────────── */
+  html[data-theme="light"] {
+    --bg: #E8C87A;
+    --surface: #FBF3DC;
+    --surface-raised: #F5E8C0;
+    --border: rgba(0,0,0,0.10);
+    --ink: #0D1117;
+    --muted: #7A4F1A;
+    --accent: #C8102E;
+    --gold: #B8730A;
+  }
+
+  html[data-theme="light"] .nav {
+    background: rgba(184,115,42,0.95);
+    border-bottom: 2px solid #C8102E;
+  }
+
+  html[data-theme="light"] .nav-logo { color: #fff; }
+
+  html[data-theme="light"] .nav-links a {
+    color: rgba(255,255,255,0.85);
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  html[data-theme="light"] .nav-links a:hover,
+  html[data-theme="light"] .nav-links a.active {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  html[data-theme="light"] .theme-toggle {
+    border-color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.85);
+  }
+
+  html[data-theme="light"] .theme-toggle:hover {
+    background: rgba(255,255,255,0.15);
+  }
+
+  html[data-theme="light"] .btn.primary { background: #C8102E; color: #fff; }
+  html[data-theme="light"] .section-header h2 { color: #0D1117; }
+
+  html[data-theme="light"] footer {
+    background: #D4A84A;
+    color: rgba(0,0,0,0.7);
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  html[data-theme="light"] .mobile-menu { background: #D4A84A; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="/index.html" class="nav-logo">🏀 WEHA 07 BOYOZ</a>
+  <div class="nav-links">
+    <a href="/play.html">Guess Who?</a>
+    <a href="/index.html#league-section">The League</a>
+    <a href="/index.html#history-section">Champions</a>
+    <a href="/index.html#wingmasters-section">Wingmasters</a>
+    <a href="/games.html" class="active">🎮 Games</a>
+  </div>
+  <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle light/dark mode">🌙</button>
+  <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="/play.html">Guess Who?</a>
+  <a href="/index.html#league-section">The League</a>
+  <a href="/index.html#history-section">Champions</a>
+  <a href="/index.html#wingmasters-section">Wingmasters</a>
+  <a href="/games.html">🎮 Games</a>
+  <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Toggle light/dark mode" style="align-self:flex-start">🌙</button>
+</div>
+
+<!-- GAMES SUB-NAV -->
+<div class="games-subnav">
+  <a href="/play.html">🧩 Guess Who?</a>
+  <a href="/quiz.html" class="active">😜 Quiz</a>
+  <a href="/wheel.html">🎡 Wheel</a>
+</div>
+
+<main>
+  <div class="container">
+    <section id="quiz-section">
+      <div class="card">
+        <div class="section-header" style="margin-bottom:22px">
+          <h2>😜 Who Are You Most Like?</h2>
+          <p>Answer 3 questions to find your fantasy archetype.</p>
+        </div>
+        <div class="quiz-progress" id="quiz-progress">Question 1 of 3</div>
+        <div id="quiz"></div>
+        <div id="result"></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  Built with ❤️ on GitHub Pages and Sagu Polate &bull; <a href="https://weha07boyoz.com">weha07boyoz.com</a>
+</footer>
+
+<script>
+  /* ── Hamburger menu ─────────────────────────────── */
+  const hamburger = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.textContent = open ? '✕' : '☰';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.textContent = '☰';
+    });
+  });
+
+  /* ── Theme toggle ───────────────────────────────── */
+  function updateToggleButtons() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+      btn.textContent = isLight ? '🌙' : '☀️';
+    });
+  }
+
+  function toggleTheme() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.removeItem('theme');
+    }
+    updateToggleButtons();
+  }
+
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    btn.addEventListener('click', toggleTheme);
+  });
+  updateToggleButtons();
+
+  /* ── Quiz ───────────────────────────────────────── */
+  const quizData = [
+    { q: "What's your go-to move on game day?",
+      options: { "Dmac": "Crush it with energy 💪", "Shmoo": "Keep it chill 😎", "Mittsy": "Make a sneaky play 🤔" } },
+    { q: "Favorite hangout spot?",
+      options: { "Dmac": "The gym 🏋️", "Shmoo": "Anywhere with snacks 🍕", "Mittsy": "Library (secret study mode) 📚" } },
+    { q: "Pick your hype song:",
+      options: { "Dmac": "Eye of the Tiger 🎶", "Shmoo": "Don't Worry Be Happy 🎵", "Mittsy": "Lose Yourself 🎧" } },
+  ];
+  const quizColors = { "Dmac": "#ef4444", "Shmoo": "#3b82f6", "Mittsy": "#22c55e" };
+
+  let scores = { "Dmac": 0, "Shmoo": 0, "Mittsy": 0 }, currentQ = 0;
+
+  function renderQuestion() {
+    const box = document.getElementById("quiz");
+    const prog = document.getElementById("quiz-progress");
+    if (currentQ >= quizData.length) { showResult(); return; }
+    prog.textContent = `Question ${currentQ + 1} of ${quizData.length}`;
+    const q = quizData[currentQ];
+    let html = `<p class="quiz-question">${q.q}</p><div class="quiz-options">`;
+    Object.entries(q.options).forEach(([who, text]) => {
+      html += `<button class="quiz-option" onclick="pick('${who}')">${text}</button>`;
+    });
+    html += '</div>';
+    box.innerHTML = html;
+  }
+
+  function pick(who) { scores[who]++; currentQ++; renderQuestion(); }
+
+  function showResult() {
+    const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+    const color = quizColors[winner] || '#f97316';
+    document.getElementById("quiz-progress").textContent = "";
+    document.getElementById("quiz").innerHTML = "";
+    document.getElementById("result").innerHTML = `
+      <div class="result-card" style="background:${color}18;border-color:${color}44">
+        <span class="result-emoji">🎉</span>
+        <div class="result-name" style="color:${color}">${winner}</div>
+        <p class="result-sub">That's your fantasy archetype.</p>
+        <button class="btn primary" onclick="resetQuiz()" style="background:${color}">Play Again</button>
+      </div>`;
+  }
+
+  function resetQuiz() {
+    scores = { "Dmac": 0, "Shmoo": 0, "Mittsy": 0 };
+    currentQ = 0;
+    document.getElementById("result").innerHTML = "";
+    renderQuestion();
+  }
+
+  renderQuestion();
+</script>
+
+</body>
+</html>

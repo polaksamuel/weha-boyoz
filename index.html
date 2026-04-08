@@ -484,6 +484,38 @@
     margin-bottom: 4px;
   }
 
+  /* ── PLAYER BADGES ────────────────────────────────── */
+  .player-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    margin-top: 6px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .player-badge.champion {
+    background: rgba(251,191,36,0.15);
+    color: var(--gold);
+    border: 1px solid rgba(251,191,36,0.35);
+  }
+
+  .player-badge.toilet {
+    background: rgba(139,92,246,0.12);
+    color: #a78bfa;
+    border: 1px solid rgba(139,92,246,0.25);
+  }
+
+  .player-badge.ringless {
+    background: rgba(255,255,255,0.04);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
   /* ── HALL OF WINGMASTERS ──────────────────────────── */
   .stats-table {
     width: 100%;
@@ -673,10 +705,9 @@
   <div class="nav-links">
     <a href="/play.html">Guess Who?</a>
     <a href="#league-section">The League</a>
-    <a href="#quiz-section">Quiz</a>
-    <a href="#wheel-section">Wheel</a>
     <a href="#history-section">Champions</a>
     <a href="#wingmasters-section">Wingmasters</a>
+    <a href="/games.html">Games</a>
   </div>
   <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle light/dark mode">🌙</button>
   <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">☰</button>
@@ -686,10 +717,9 @@
 <div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
   <a href="/play.html">Guess Who?</a>
   <a href="#league-section">The League</a>
-  <a href="#quiz-section">Quiz</a>
-  <a href="#wheel-section">Wheel</a>
   <a href="#history-section">Champions</a>
   <a href="#wingmasters-section">Wingmasters</a>
+  <a href="/games.html">Games</a>
   <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Toggle light/dark mode" style="align-self:flex-start">🌙</button>
 </div>
 
@@ -700,8 +730,8 @@
     <h1 class="hero-title">WeHa 07 Boyoz</h1>
     <p class="hero-sub">Pseudoscience Center</p>
     <div class="cta">
-      <a href="#quiz-section" class="btn primary">Take the Quiz</a>
-      <a href="#wheel-section" class="btn ghost">Spin the Wheel</a>
+      <a href="/games.html" class="btn primary">Play Games</a>
+      <a href="#history-section" class="btn ghost">Hall of Champions</a>
     </div>
   </div>
 </header>
@@ -716,36 +746,6 @@
         <p>10 managers. 1 trophy. Endless trash talk.</p>
       </div>
       <div class="league-grid" id="league-grid"></div>
-    </section>
-
-    <!-- QUIZ -->
-    <section id="quiz-section">
-      <div class="card">
-        <div class="section-header" style="margin-bottom:22px">
-          <h2>😜 Who Are You Most Like?</h2>
-          <p>Answer 3 questions to see if you're D Mac, Shmoo, or Mr Mitt.</p>
-        </div>
-        <div class="quiz-progress" id="quiz-progress">Question 1 of 3</div>
-        <div id="quiz"></div>
-        <div id="result"></div>
-      </div>
-    </section>
-
-    <!-- WHEEL -->
-    <section id="wheel-section">
-      <div class="card" style="text-align:center">
-        <div class="section-header" style="margin-bottom:22px">
-          <h2>🎡 Championship Decider</h2>
-          <p>Tap spin and let fate crown the champ.</p>
-        </div>
-        <div class="wheel-wrap">
-          <div class="pointer-triangle" aria-hidden="true"></div>
-          <svg id="wheel-svg" width="300" height="300" viewBox="0 0 300 300" aria-label="Spin wheel with three segments: D Mac, Shmoo, Mittsy"></svg>
-        </div>
-        <div style="height:18px"></div>
-        <button class="btn primary" onclick="spinWheel()">Spin</button>
-        <div id="winner" aria-live="polite"></div>
-      </div>
     </section>
 
     <!-- HALL OF CHAMPIONS -->
@@ -771,30 +771,40 @@
             <thead>
               <tr>
                 <th>Wingmaster</th>
+                <th>Year</th>
                 <th># Wings Eaten</th>
-                <th>Yogurt Consumption</th>
+                <th>Dairy Consumption</th>
                 <th>Shame Level</th>
                 <th>Answers to Sean 'Mittsy' Evans</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Train</strong></td>
-                <td>?</td>
-                <td>?</td>
-                <td>?</td>
-                <td>?</td>
-              </tr>
-              <tr>
                 <td><strong>Gunner</strong></td>
+                <td>2024</td>
                 <td>All</td>
                 <td>99</td>
                 <td>0</td>
                 <td>A+</td>
               </tr>
+              <tr>
+                <td><strong>A-Train</strong></td>
+                <td>2025</td>
+                <td>All</td>
+                <td style="color:var(--accent);font-weight:700">GALLONS</td>
+                <td style="color:var(--accent);font-weight:700">MAX</td>
+                <td>C - Bad at yearbook game</td>
+              </tr>
+              <tr>
+                <td><strong>Nee</strong></td>
+                <td>2026</td>
+                <td style="color:var(--muted);font-style:italic">?</td>
+                <td style="color:var(--muted);font-style:italic">?</td>
+                <td style="color:var(--muted);font-style:italic">?</td>
+                <td style="color:var(--muted);font-style:italic">?</td>
+              </tr>
             </tbody>
           </table>
-          <p style="margin-top:14px; font-size:0.85rem; color:var(--muted); font-style:italic">🔥 Pending evaluation</p>
         </div>
       </div>
     </section>
@@ -860,8 +870,8 @@
 
   /* ── History data ───────────────────────────────── */
   const HISTORY = [
-    { season: 2014, champion: "Sco",     championTeam: null,                   runnerUp: "Shmoo",   runnerUpTeam: null },
-    { season: 2015, champion: "PJV",     championTeam: null,                   runnerUp: "Shmoo",   runnerUpTeam: null },
+    { season: 2014, champion: "Sco",     championTeam: "Ibacka Flack Flame",   runnerUp: "Shmoo",   runnerUpTeam: null },
+    { season: 2015, champion: "PJV",     championTeam: "Game, Blouses",        runnerUp: "Shmoo",   runnerUpTeam: null },
     { season: 2016, champion: "Nee",     championTeam: null,                   runnerUp: "A-Train", runnerUpTeam: null },
     { season: 2017, champion: "A-Train", championTeam: null,                   runnerUp: "Leikin",  runnerUpTeam: null },
     { season: 2018, champion: "Leikin",  championTeam: null,                   runnerUp: "A-Train", runnerUpTeam: null },
@@ -877,16 +887,16 @@
 
   /* ── Player roster ──────────────────────────────── */
   const PLAYERS = [
-    { key: "shmoo",  name: "Shmoo",   historyKey: "Shmoo",   color: "#3b82f6", img: null,                          imgAlt: null },
-    { key: "mittsy", name: "Mittsy",  historyKey: "Mittsy",  color: "#22c55e", img: "images/players/Mr_Mitt.png",  imgAlt: "Mittsy" },
-    { key: "atrain", name: "A-Train", historyKey: "A-Train", color: "#f97316", img: null,                          imgAlt: null },
-    { key: "dmac",   name: "Dmac",    historyKey: "Dmac",    color: "#ef4444", img: null,                          imgAlt: null },
-    { key: "pjv",    name: "PJV",     historyKey: "PJV",     color: "#a855f7", img: "images/players/PJV.png",      imgAlt: "PJV" },
-    { key: "roc",    name: "Roc",     historyKey: "Roc",     color: "#06b6d4", img: null,                          imgAlt: null },
-    { key: "sco",    name: "Sco",     historyKey: "Sco",     color: "#ec4899", img: null,                          imgAlt: null },
-    { key: "nee",    name: "Nee",     historyKey: "Nee",     color: "#84cc16", img: null,                          imgAlt: null },
-    { key: "streim", name: "Streim",  historyKey: "Streim",  color: "#f59e0b", img: null,                          imgAlt: null },
-    { key: "leikin", name: "Leikin",  historyKey: "Leikin",  color: "#64748b", img: "images/players/A_Leikin.png", imgAlt: "Leikin" },
+    { key: "shmoo",  name: "Shmoo",   historyKey: "Shmoo",   color: "#3b82f6", img: null,                          imgAlt: null,     badge: null },
+    { key: "mittsy", name: "Mittsy",  historyKey: "Mittsy",  color: "#22c55e", img: "images/players/Mr_Mitt.png",  imgAlt: "Mittsy", badge: "champion" },
+    { key: "atrain", name: "A-Train", historyKey: "A-Train", color: "#f97316", img: null,                          imgAlt: null,     badge: null },
+    { key: "dmac",   name: "Dmac",    historyKey: "Dmac",    color: "#ef4444", img: null,                          imgAlt: null,     badge: null },
+    { key: "pjv",    name: "PJV",     historyKey: "PJV",     color: "#a855f7", img: "images/players/PJV.png",      imgAlt: "PJV",    badge: null },
+    { key: "roc",    name: "Roc",     historyKey: "Roc",     color: "#06b6d4", img: null,                          imgAlt: null,     badge: "ringless" },
+    { key: "sco",    name: "Sco",     historyKey: "Sco",     color: "#ec4899", img: null,                          imgAlt: null,     badge: null },
+    { key: "nee",    name: "Nee",     historyKey: "Nee",     color: "#84cc16", img: null,                          imgAlt: null,     badge: "toilet" },
+    { key: "streim", name: "Streim",  historyKey: "Streim",  color: "#f59e0b", img: null,                          imgAlt: null,     badge: "ringless" },
+    { key: "leikin", name: "Leikin",  historyKey: "Leikin",  color: "#64748b", img: "images/players/A_Leikin.png", imgAlt: "Leikin", badge: null },
   ];
 
   /* ── The League grid ────────────────────────────── */
@@ -905,127 +915,25 @@
         ? `<div class="player-avatar"><img src="${p.img}" alt="${p.imgAlt}" loading="lazy"></div>`
         : `<div class="player-avatar" style="background:${p.color}22;color:${p.color}">${initials}</div>`;
 
+      const badgeLabels = {
+        champion: '🏆 Champion',
+        toilet:   '🚽 Toilet Bowl Champ',
+        ringless: '💍 Ringless',
+      };
+      const badgeHtml = p.badge
+        ? `<div class="player-badge ${p.badge}">${badgeLabels[p.badge]}</div>`
+        : '';
+
       return `<div class="player-card">
         <div class="player-card-top" style="background:${p.color}"></div>
         ${avatarHtml}
         <div class="player-name">${p.name}</div>
         <div class="player-titles">${titleText}</div>
+        ${badgeHtml}
       </div>`;
     }).join('');
   }
   renderLeague();
-
-  /* ── Quiz ───────────────────────────────────────── */
-  const quizData = [
-    { q: "What's your go-to move on game day?",
-      options: { "D Mac": "Crush it with energy 💪", "Shmoo": "Keep it chill 😎", "Mr Mitt": "Make a sneaky play 🤔" } },
-    { q: "Favorite hangout spot?",
-      options: { "D Mac": "The gym 🏋️", "Shmoo": "Anywhere with snacks 🍕", "Mr Mitt": "Library (secret study mode) 📚" } },
-    { q: "Pick your hype song:",
-      options: { "D Mac": "Eye of the Tiger 🎶", "Shmoo": "Don't Worry Be Happy 🎵", "Mr Mitt": "Lose Yourself 🎧" } },
-  ];
-  const quizColors = { "D Mac": "#ef4444", "Shmoo": "#3b82f6", "Mr Mitt": "#22c55e" };
-
-  let scores = { "D Mac": 0, "Shmoo": 0, "Mr Mitt": 0 }, currentQ = 0;
-
-  function renderQuestion() {
-    const box = document.getElementById("quiz");
-    const prog = document.getElementById("quiz-progress");
-    if (currentQ >= quizData.length) { showResult(); return; }
-    prog.textContent = `Question ${currentQ + 1} of ${quizData.length}`;
-    const q = quizData[currentQ];
-    let html = `<p class="quiz-question">${q.q}</p><div class="quiz-options">`;
-    Object.entries(q.options).forEach(([who, text]) => {
-      html += `<button class="quiz-option" onclick="pick('${who}')">${text}</button>`;
-    });
-    html += '</div>';
-    box.innerHTML = html;
-  }
-
-  function pick(who) { scores[who]++; currentQ++; renderQuestion(); }
-
-  function showResult() {
-    const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-    const color = quizColors[winner] || '#f97316';
-    document.getElementById("quiz-progress").textContent = "";
-    document.getElementById("quiz").innerHTML = "";
-    document.getElementById("result").innerHTML = `
-      <div class="result-card" style="background:${color}18;border-color:${color}44">
-        <span class="result-emoji">🎉</span>
-        <div class="result-name" style="color:${color}">${winner}</div>
-        <p class="result-sub">That's your fantasy archetype.</p>
-        <button class="btn primary" onclick="resetQuiz()" style="background:${color}">Play Again</button>
-      </div>`;
-  }
-
-  function resetQuiz() {
-    scores = { "D Mac": 0, "Shmoo": 0, "Mr Mitt": 0 };
-    currentQ = 0;
-    document.getElementById("result").innerHTML = "";
-    renderQuestion();
-  }
-
-  renderQuestion();
-
-  /* ── Wheel ──────────────────────────────────────── */
-  const wheelPlayers = [
-    { name: "D Mac",  color: "#ef4444" },
-    { name: "Shmoo",  color: "#3b82f6" },
-    { name: "Mittsy", color: "#22c55e" },
-  ];
-
-  function polarToCartesian(cx, cy, r, angleDeg) {
-    const rad = (angleDeg * Math.PI) / 180;
-    return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
-  }
-
-  function buildWheel() {
-    const svg = document.getElementById('wheel-svg');
-    const cx = 150, cy = 150, r = 140;
-    const n = wheelPlayers.length;
-    const segAngle = 360 / n;
-    let html = '';
-
-    wheelPlayers.forEach((p, i) => {
-      const startDeg = i * segAngle - 90;
-      const endDeg   = startDeg + segAngle;
-      const start = polarToCartesian(cx, cy, r, startDeg);
-      const end   = polarToCartesian(cx, cy, r, endDeg);
-      const largeArc = segAngle > 180 ? 1 : 0;
-      const pathD = `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} 1 ${end.x} ${end.y} Z`;
-
-      const midDeg = startDeg + segAngle / 2;
-      const lp = polarToCartesian(cx, cy, r * 0.62, midDeg);
-
-      html += `<path d="${pathD}" fill="${p.color}" opacity="0.9" stroke="#080b14" stroke-width="2.5"/>`;
-      html += `<text x="${lp.x}" y="${lp.y}" text-anchor="middle" dominant-baseline="middle"
-                 font-family="'Bebas Neue',sans-serif" font-size="17" fill="#fff" letter-spacing="0.5">${p.name}</text>`;
-    });
-
-    html += `<circle cx="${cx}" cy="${cy}" r="22" fill="#080b14" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>`;
-    svg.innerHTML = html;
-  }
-
-  buildWheel();
-
-  let currentRotation = 0;
-  function spinWheel() {
-    const svg = document.getElementById('wheel-svg');
-    const out = document.getElementById('winner');
-    out.textContent = '';
-    out.style.color = '';
-    const extra = Math.floor(Math.random() * 360);
-    const totalDeg = currentRotation + 1080 + extra;
-    svg.style.transform = `rotate(${totalDeg}deg)`;
-    currentRotation = totalDeg;
-    setTimeout(() => {
-      const norm = (((-totalDeg) % 360) + 360) % 360;
-      const idx = Math.floor(norm / (360 / wheelPlayers.length)) % wheelPlayers.length;
-      const winner = wheelPlayers[idx];
-      out.textContent = `🏆 ${winner.name}`;
-      out.style.color = winner.color;
-    }, 4000);
-  }
 
   /* ── Hall of Champions ──────────────────────────── */
   function renderHistory() {

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WeHa 07 Boyoz – Wheel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<script>
+  (function() {
+    if (localStorage.getItem('theme') !== 'dark')
+      document.documentElement.setAttribute('data-theme', 'light');
+  })();
+</script>
+
+<style>
+  :root {
+    --bg: #080b14;
+    --surface: #0f1420;
+    --surface-raised: #141a2e;
+    --border: rgba(255,255,255,0.08);
+    --ink: #f0f4ff;
+    --muted: #8896b3;
+    --accent: #f97316;
+    --gold: #fbbf24;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Poppins, system-ui, sans-serif;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── NAV ──────────────────────────────────────────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px;
+    background: rgba(8, 11, 20, 0.90);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex; gap: 6px; align-items: center;
+  }
+
+  .nav-links a {
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    min-height: 34px;
+    display: inline-flex; align-items: center;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+    border-color: rgba(249, 115, 22, 0.45);
+    background: rgba(249, 115, 22, 0.08);
+  }
+
+  .nav-links a.active {
+    color: var(--accent);
+    border-color: rgba(249, 115, 22, 0.45);
+  }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 11px;
+    cursor: pointer;
+    color: var(--ink);
+    font-size: 1.1rem;
+    min-height: 44px; min-width: 44px;
+    align-items: center; justify-content: center;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 57px; left: 0; right: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    padding: 12px 20px 16px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-weight: 600;
+    min-height: 44px;
+    display: flex; align-items: center;
+    transition: color 0.2s, background 0.2s;
+    font-size: 0.95rem;
+  }
+
+  .mobile-menu a:hover {
+    color: var(--accent);
+    background: rgba(249, 115, 22, 0.08);
+  }
+
+  /* ── GAMES SUB-NAV ────────────────────────────────── */
+  .games-subnav {
+    position: fixed;
+    top: 57px; left: 0; right: 0;
+    z-index: 98;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    display: flex;
+    gap: 4px;
+    height: 44px;
+    align-items: center;
+  }
+
+  .games-subnav a {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s, background 0.15s;
+    white-space: nowrap;
+  }
+
+  .games-subnav a:hover {
+    color: var(--ink);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .games-subnav a.active {
+    color: var(--accent);
+    background: rgba(249,115,22,0.1);
+  }
+
+  /* ── BUTTONS ──────────────────────────────────────── */
+  .btn {
+    cursor: pointer; border: none; border-radius: 12px;
+    padding: 12px 24px; font-weight: 700; font-family: inherit;
+    font-size: 0.95rem; min-height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: opacity 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn.primary { background: var(--accent); color: #fff; }
+
+  /* ── SECTION LAYOUT ───────────────────────────────── */
+  main { background: var(--bg); padding-top: 101px; }
+  section { padding: 60px 0; }
+
+  .section-header { text-align: center; margin-bottom: 34px; }
+
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: 1.5px;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .section-header p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ── CARD ─────────────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    text-align: center;
+  }
+
+  /* ── WHEEL ────────────────────────────────────────── */
+  .wheel-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 22px 0 4px;
+  }
+
+  .pointer-triangle {
+    width: 0; height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 28px solid var(--accent);
+    margin-bottom: -5px;
+    z-index: 2;
+    position: relative;
+    filter: drop-shadow(0 3px 8px rgba(249,115,22,0.55));
+  }
+
+  #wheel-svg {
+    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    display: block;
+    border-radius: 50%;
+    overflow: visible;
+  }
+
+  #winner {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 1.5px;
+    margin-top: 16px;
+    min-height: 2.8rem;
+    transition: color 0.3s;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  footer a { color: var(--accent); }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 44px 0; }
+    .card { padding: 22px 18px; }
+  }
+
+  /* ── THEME TOGGLE BUTTON ──────────────────────── */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    min-height: 44px; min-width: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+    line-height: 1;
+    color: var(--muted);
+  }
+
+  .theme-toggle:hover {
+    background: rgba(249,115,22,0.08);
+    border-color: rgba(249,115,22,0.45);
+  }
+
+  /* ── LIGHT MODE ───────────────────────────────── */
+  html[data-theme="light"] {
+    --bg: #E8C87A;
+    --surface: #FBF3DC;
+    --surface-raised: #F5E8C0;
+    --border: rgba(0,0,0,0.10);
+    --ink: #0D1117;
+    --muted: #7A4F1A;
+    --accent: #C8102E;
+    --gold: #B8730A;
+  }
+
+  html[data-theme="light"] .nav {
+    background: rgba(184,115,42,0.95);
+    border-bottom: 2px solid #C8102E;
+  }
+
+  html[data-theme="light"] .nav-logo { color: #fff; }
+
+  html[data-theme="light"] .nav-links a {
+    color: rgba(255,255,255,0.85);
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  html[data-theme="light"] .nav-links a:hover,
+  html[data-theme="light"] .nav-links a.active {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  html[data-theme="light"] .theme-toggle {
+    border-color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.85);
+  }
+
+  html[data-theme="light"] .theme-toggle:hover {
+    background: rgba(255,255,255,0.15);
+  }
+
+  html[data-theme="light"] .btn.primary { background: #C8102E; color: #fff; }
+  html[data-theme="light"] .section-header h2 { color: #0D1117; }
+
+  html[data-theme="light"] footer {
+    background: #D4A84A;
+    color: rgba(0,0,0,0.7);
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  html[data-theme="light"] .mobile-menu { background: #D4A84A; }
+
+  html[data-theme="light"] .pointer-triangle {
+    border-top-color: #C8102E;
+    filter: drop-shadow(0 3px 8px rgba(200,16,46,0.55));
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="/index.html" class="nav-logo">🏀 WEHA 07 BOYOZ</a>
+  <div class="nav-links">
+    <a href="/play.html">Guess Who?</a>
+    <a href="/index.html#league-section">The League</a>
+    <a href="/index.html#history-section">Champions</a>
+    <a href="/index.html#wingmasters-section">Wingmasters</a>
+    <a href="/games.html" class="active">🎮 Games</a>
+  </div>
+  <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle light/dark mode">🌙</button>
+  <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="/play.html">Guess Who?</a>
+  <a href="/index.html#league-section">The League</a>
+  <a href="/index.html#history-section">Champions</a>
+  <a href="/index.html#wingmasters-section">Wingmasters</a>
+  <a href="/games.html">🎮 Games</a>
+  <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Toggle light/dark mode" style="align-self:flex-start">🌙</button>
+</div>
+
+<!-- GAMES SUB-NAV -->
+<div class="games-subnav">
+  <a href="/play.html">🧩 Guess Who?</a>
+  <a href="/quiz.html">😜 Quiz</a>
+  <a href="/wheel.html" class="active">🎡 Wheel</a>
+</div>
+
+<main>
+  <div class="container">
+    <section id="wheel-section">
+      <div class="card">
+        <div class="section-header" style="margin-bottom:22px">
+          <h2>🎡 Championship Decider</h2>
+          <p>Tap spin and let fate crown the champ.</p>
+        </div>
+        <div class="wheel-wrap">
+          <div class="pointer-triangle" aria-hidden="true"></div>
+          <svg id="wheel-svg" width="340" height="340" viewBox="0 0 340 340" aria-label="Spin wheel with all 10 league managers"></svg>
+        </div>
+        <div style="height:18px"></div>
+        <button class="btn primary" onclick="spinWheel()">Spin</button>
+        <div id="winner" aria-live="polite"></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  Built with ❤️ on GitHub Pages and Sagu Polate &bull; <a href="https://weha07boyoz.com">weha07boyoz.com</a>
+</footer>
+
+<script>
+  /* ── Hamburger menu ─────────────────────────────── */
+  const hamburger = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.textContent = open ? '✕' : '☰';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.textContent = '☰';
+    });
+  });
+
+  /* ── Theme toggle ───────────────────────────────── */
+  function updateToggleButtons() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+      btn.textContent = isLight ? '🌙' : '☀️';
+    });
+  }
+
+  function toggleTheme() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.removeItem('theme');
+    }
+    updateToggleButtons();
+  }
+
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    btn.addEventListener('click', toggleTheme);
+  });
+  updateToggleButtons();
+
+  /* ── Wheel ──────────────────────────────────────── */
+  const wheelPlayers = [
+    { name: "Shmoo",   color: "#3b82f6" },
+    { name: "Mittsy",  color: "#22c55e" },
+    { name: "A-Train", color: "#f97316" },
+    { name: "Dmac",    color: "#ef4444" },
+    { name: "PJV",     color: "#a855f7" },
+    { name: "Roc",     color: "#06b6d4" },
+    { name: "Sco",     color: "#ec4899" },
+    { name: "Nee",     color: "#84cc16" },
+    { name: "Streim",  color: "#f59e0b" },
+    { name: "Leikin",  color: "#64748b" },
+  ];
+
+  function polarToCartesian(cx, cy, r, angleDeg) {
+    const rad = (angleDeg * Math.PI) / 180;
+    return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+  }
+
+  function buildWheel() {
+    const svg = document.getElementById('wheel-svg');
+    const cx = 170, cy = 170, r = 160;
+    const n = wheelPlayers.length;
+    const segAngle = 360 / n;
+    let html = '';
+
+    wheelPlayers.forEach((p, i) => {
+      const startDeg = i * segAngle - 90;
+      const endDeg   = startDeg + segAngle;
+      const start = polarToCartesian(cx, cy, r, startDeg);
+      const end   = polarToCartesian(cx, cy, r, endDeg);
+      const largeArc = segAngle > 180 ? 1 : 0;
+      const pathD = `M ${cx} ${cy} L ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} 1 ${end.x} ${end.y} Z`;
+
+      const midDeg = startDeg + segAngle / 2;
+      const lp = polarToCartesian(cx, cy, r * 0.65, midDeg);
+
+      html += `<path d="${pathD}" fill="${p.color}" opacity="0.9" stroke="#080b14" stroke-width="2"/>`;
+      html += `<text x="${lp.x}" y="${lp.y}" text-anchor="middle" dominant-baseline="middle"
+                 font-family="'Bebas Neue',sans-serif" font-size="13" fill="#fff" letter-spacing="0.5">${p.name}</text>`;
+    });
+
+    html += `<circle cx="${cx}" cy="${cy}" r="22" fill="#080b14" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>`;
+    svg.innerHTML = html;
+  }
+
+  buildWheel();
+
+  let currentRotation = 0;
+  function spinWheel() {
+    const svg = document.getElementById('wheel-svg');
+    const out = document.getElementById('winner');
+    out.textContent = '';
+    out.style.color = '';
+    const extra = Math.floor(Math.random() * 360);
+    const totalDeg = currentRotation + 1080 + extra;
+    svg.style.transform = `rotate(${totalDeg}deg)`;
+    currentRotation = totalDeg;
+    setTimeout(() => {
+      const norm = (((-totalDeg) % 360) + 360) % 360;
+      const idx = Math.floor(norm / (360 / wheelPlayers.length)) % wheelPlayers.length;
+      const winner = wheelPlayers[idx];
+      out.textContent = `🏆 ${winner.name}`;
+      out.style.color = winner.color;
+    }, 4000);
+  }
+</script>
+
+</body>
+</html>
