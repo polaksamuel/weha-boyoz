@@ -1,0 +1,12 @@
+[
+  { "id": "shmoo",  "nickname": "Shmoo",   "realName": "Sam Polak",       "color": "#3b82f6", "image": null,                         "historyKey": "Shmoo"   },
+  { "id": "mittsy", "nickname": "Mittsy",  "realName": "Matt Mittelmann", "color": "#22c55e", "image": "images/players/Mr_Mitt.png", "historyKey": "Mittsy"  },
+  { "id": "atrain", "nickname": "A-Train", "realName": "Adam Nestler",    "color": "#f97316", "image": null,                         "historyKey": "A-Train" },
+  { "id": "dmac",   "nickname": "Dmac",    "realName": "David McMahon",   "color": "#ef4444", "image": null,                         "historyKey": "Dmac"    },
+  { "id": "pjv",    "nickname": "PJV",     "realName": "Paul Visgilio",   "color": "#a855f7", "image": "images/players/PJV.png",    "historyKey": "PJV"     },
+  { "id": "roc",    "nickname": "Roc",     "realName": "Evan Radeen",     "color": "#06b6d4", "image": null,                         "historyKey": "Roc"     },
+  { "id": "sco",    "nickname": "Sco",     "realName": "Scott Ziplow",    "color": "#ec4899", "image": null,                         "historyKey": "Sco"     },
+  { "id": "nee",    "nickname": "Nee",     "realName": "Dan Nee",         "color": "#84cc16", "image": null,                         "historyKey": "Nee"     },
+  { "id": "streim", "nickname": "Streim",  "realName": "Alex Streim",     "color": "#f59e0b", "image": null,                         "historyKey": "Streim"  },
+  { "id": "leikin", "nickname": "Leikin",  "realName": "Alex Leikin",     "color": "#64748b", "image": "images/players/A_Leikin.png","historyKey": "Leikin"  }
+]

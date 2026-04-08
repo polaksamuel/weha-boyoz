@@ -476,6 +476,14 @@
     letter-spacing: 0.5px;
   }
 
+  .champion-team {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 2px;
+    margin-bottom: 4px;
+  }
+
   /* ── HALL OF WINGMASTERS ──────────────────────────── */
   .stats-table {
     width: 100%;
@@ -852,27 +860,33 @@
 
   /* ── History data ───────────────────────────────── */
   const HISTORY = [
-    { season: 2017, champion: "Shmoo",   runnerUp: "D Mac",   score: "142–121" },
-    { season: 2018, champion: "Mr Mitt", runnerUp: "Shmoo",   score: "128–122" },
-    { season: 2019, champion: "D Mac",   runnerUp: "Mr Mitt", score: "137–129" },
-    { season: 2020, champion: "Shmoo",   runnerUp: "Gunner",  score: "131–118" },
-    { season: 2021, champion: "Gunner",  runnerUp: "D Mac",   score: "125–123" },
-    { season: 2022, champion: "Mr Mitt", runnerUp: "Shmoo",   score: "134–127" },
-    { season: 2023, champion: "D Mac",   runnerUp: "Gunner",  score: "139–130" },
+    { season: 2014, champion: "Sco",     championTeam: null,                   runnerUp: "Shmoo",   runnerUpTeam: null },
+    { season: 2015, champion: "PJV",     championTeam: null,                   runnerUp: "Shmoo",   runnerUpTeam: null },
+    { season: 2016, champion: "Nee",     championTeam: null,                   runnerUp: "A-Train", runnerUpTeam: null },
+    { season: 2017, champion: "A-Train", championTeam: null,                   runnerUp: "Leikin",  runnerUpTeam: null },
+    { season: 2018, champion: "Leikin",  championTeam: null,                   runnerUp: "A-Train", runnerUpTeam: null },
+    { season: 2019, champion: "Leikin",  championTeam: null,                   runnerUp: "Nee",     runnerUpTeam: null },
+    { season: 2020, champion: "Leikin",  championTeam: null,                   runnerUp: "Dmac",    runnerUpTeam: null },
+    { season: 2021, champion: "Nee",     championTeam: "Pigeon Boys",          runnerUp: "Leikin",  runnerUpTeam: "Jewish Space Blazers" },
+    { season: 2022, champion: "Dmac",    championTeam: "Bingram's Boyos III",  runnerUp: "Streim",  runnerUpTeam: "The Collective" },
+    { season: 2023, champion: "Leikin",  championTeam: "Triple Single",        runnerUp: "Mittsy",  runnerUpTeam: "Mitt Hinkie" },
+    { season: 2024, champion: "Shmoo",   championTeam: "BrunSon and Sons",     runnerUp: "Leikin",  runnerUpTeam: "The Good Guys" },
+    { season: 2025, champion: "Dmac",    championTeam: "Wembys Wingmasters",   runnerUp: "Roc",     runnerUpTeam: "Mandy Buttersworth" },
+    { season: 2026, champion: "Mittsy",  championTeam: "Mitt Hinkie",          runnerUp: "Leikin",  runnerUpTeam: "The Cream Rises to the Top" },
   ];
 
   /* ── Player roster ──────────────────────────────── */
   const PLAYERS = [
-    { key: "shmoo",  name: "Shmoo",  historyName: "Shmoo",   color: "#3b82f6", img: null,             imgAlt: null },
-    { key: "mittsy", name: "Mittsy", historyName: "Mr Mitt", color: "#22c55e", img: "images/players/Mr_Mitt.png",    imgAlt: "Mittsy avatar" },
-    { key: "atrain", name: "Atrain", historyName: null,       color: "#f97316", img: null,             imgAlt: null },
-    { key: "dmac",   name: "D Mac",  historyName: "D Mac",   color: "#ef4444", img: null,             imgAlt: null },
-    { key: "pjv",    name: "PJV",    historyName: null,       color: "#a855f7", img: "images/players/PJV.png",        imgAlt: "PJV avatar" },
-    { key: "roc",    name: "Roc",    historyName: null,       color: "#06b6d4", img: null,             imgAlt: null },
-    { key: "sco",    name: "Sco",    historyName: null,       color: "#ec4899", img: null,             imgAlt: null },
-    { key: "nee",    name: "Nee",    historyName: null,       color: "#84cc16", img: null,             imgAlt: null },
-    { key: "streim", name: "Streim", historyName: null,       color: "#f59e0b", img: null,             imgAlt: null },
-    { key: "leikin", name: "Leikin", historyName: null,       color: "#64748b", img: "images/players/A_Leikin.png",   imgAlt: "Leikin avatar" },
+    { key: "shmoo",  name: "Shmoo",   historyKey: "Shmoo",   color: "#3b82f6", img: null,                          imgAlt: null },
+    { key: "mittsy", name: "Mittsy",  historyKey: "Mittsy",  color: "#22c55e", img: "images/players/Mr_Mitt.png",  imgAlt: "Mittsy" },
+    { key: "atrain", name: "A-Train", historyKey: "A-Train", color: "#f97316", img: null,                          imgAlt: null },
+    { key: "dmac",   name: "Dmac",    historyKey: "Dmac",    color: "#ef4444", img: null,                          imgAlt: null },
+    { key: "pjv",    name: "PJV",     historyKey: "PJV",     color: "#a855f7", img: "images/players/PJV.png",      imgAlt: "PJV" },
+    { key: "roc",    name: "Roc",     historyKey: "Roc",     color: "#06b6d4", img: null,                          imgAlt: null },
+    { key: "sco",    name: "Sco",     historyKey: "Sco",     color: "#ec4899", img: null,                          imgAlt: null },
+    { key: "nee",    name: "Nee",     historyKey: "Nee",     color: "#84cc16", img: null,                          imgAlt: null },
+    { key: "streim", name: "Streim",  historyKey: "Streim",  color: "#f59e0b", img: null,                          imgAlt: null },
+    { key: "leikin", name: "Leikin",  historyKey: "Leikin",  color: "#64748b", img: "images/players/A_Leikin.png", imgAlt: "Leikin" },
   ];
 
   /* ── The League grid ────────────────────────────── */
@@ -882,7 +896,7 @@
   function renderLeague() {
     const grid = document.getElementById('league-grid');
     grid.innerHTML = PLAYERS.map(p => {
-      const n = p.historyName ? (titleCounts[p.historyName] || 0) : 0;
+      const n = titleCounts[p.historyKey] || 0;
       const titleText = n === 1 ? '1 title' : `${n} title${n !== 1 ? 's' : ''}`;
       const initials = p.name.replace(/[^A-Za-z ]/g, '').trim().split(' ')
         .map(w => w[0]).slice(0, 2).join('').toUpperCase();
@@ -1018,8 +1032,16 @@
     const el = document.getElementById("history");
     if (!el) return;
     const champColors = {
-      "Shmoo": "#3b82f6", "Mr Mitt": "#22c55e",
-      "D Mac": "#ef4444", "Gunner": "#f59e0b"
+      "Sco":     "#ec4899",
+      "PJV":     "#a855f7",
+      "Nee":     "#84cc16",
+      "A-Train": "#f97316",
+      "Leikin":  "#64748b",
+      "Dmac":    "#ef4444",
+      "Shmoo":   "#3b82f6",
+      "Streim":  "#f59e0b",
+      "Mittsy":  "#22c55e",
+      "Roc":     "#06b6d4",
     };
     const cards = [...HISTORY].sort((a, b) => b.season - a.season).map(r => {
       const color = champColors[r.champion] || '#f97316';
@@ -1028,8 +1050,8 @@
         <div class="champion-trophy" aria-hidden="true">🏆</div>
         <div class="champion-season">${r.season}</div>
         <div class="champion-name" style="color:${color}">${r.champion}</div>
-        <div class="champion-runner">Runner-up: ${r.runnerUp || '—'}</div>
-        <div class="champion-score">${r.score || ''}</div>
+        ${r.championTeam ? `<div class="champion-team">"${r.championTeam}"</div>` : ''}
+        <div class="champion-runner">Runner-up: ${r.runnerUp || '—'}${r.runnerUpTeam ? ` · "${r.runnerUpTeam}"` : ''}</div>
       </div>`;
     }).join('');
     el.innerHTML = `<div class="champions-grid">${cards}</div>`;
