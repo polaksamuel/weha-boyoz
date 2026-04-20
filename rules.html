@@ -212,6 +212,20 @@
 
   .section-header p { color: var(--muted); font-size: 0.95rem; }
 
+  /* ── BUTTONS ─────────────────────────────────────── */
+  .btn {
+    cursor: pointer; border: none; border-radius: 12px;
+    padding: 12px 24px; font-weight: 700; font-family: inherit;
+    font-size: 0.95rem; min-height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: opacity 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn.primary { background: var(--accent); color: #fff; }
+
+  html[data-theme="light"] .btn.primary { background: #C8102E; color: #fff; }
+
   /* ── LEAGUE RULES ─────────────────────────────────── */
   .rules-grid {
     display: grid;
@@ -552,6 +566,10 @@
     <section>
       <div class="rules-grid">
 
+        <div style="grid-column: 1 / -1; text-align: center; margin-top: 8px;">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAMIYVoW99iiCiexn3ugDkfGznnaZidL1L6bLLV06lLQMgJg/viewform?usp=publish-editor" target="_blank" rel="noopener" class="btn primary">📬 Propose a Rule Change</a>
+        </div>
+
         <!-- KEEPERS -->
         <div class="rule-card open">
           <div class="rule-card-header" onclick="toggleRule(this)">
@@ -585,7 +603,7 @@
         </div>
 
         <!-- TRANSACTIONS -->
-        <div class="rule-card">
+        <div class="rule-card open">
           <div class="rule-card-header" onclick="toggleRule(this)">
             <div class="rule-card-title"><span class="rule-card-icon">🔄</span> Transactions</div>
             <span class="rule-card-chevron">▼</span>
@@ -598,7 +616,7 @@
         </div>
 
         <!-- TIE-BREAKERS -->
-        <div class="rule-card">
+        <div class="rule-card open">
           <div class="rule-card-header" onclick="toggleRule(this)">
             <div class="rule-card-title"><span class="rule-card-icon">⚖️</span> Tie-Breakers</div>
             <span class="rule-card-chevron">▼</span>
@@ -613,7 +631,7 @@
         </div>
 
         <!-- BUY-IN & PAYOUT -->
-        <div class="rule-card">
+        <div class="rule-card open">
           <div class="rule-card-header" onclick="toggleRule(this)">
             <div class="rule-card-title"><span class="rule-card-icon">💰</span> Buy-In &amp; Payout</div>
             <span class="rule-card-chevron">▼</span>
@@ -628,7 +646,7 @@
         </div>
 
         <!-- LOTTERY -->
-        <div class="rule-card">
+        <div class="rule-card open">
           <div class="rule-card-header" onclick="toggleRule(this)">
             <div class="rule-card-title"><span class="rule-card-icon">🎰</span> Draft Lottery</div>
             <span class="rule-card-chevron">▼</span>
@@ -645,7 +663,7 @@
         </div>
 
         <!-- TOILET BOWL -->
-        <div class="rule-card">
+        <div class="rule-card open">
           <div class="rule-card-header" onclick="toggleRule(this)">
             <div class="rule-card-title"><span class="rule-card-icon">🚽</span> Toilet Bowl</div>
             <span class="rule-card-chevron">▼</span>
@@ -662,7 +680,7 @@
         </div>
 
         <!-- PUNISHMENT -->
-        <div class="rule-card">
+        <div class="rule-card open">
           <div class="rule-card-header" onclick="toggleRule(this)">
             <div class="rule-card-title"><span class="rule-card-icon">🌶️</span> Punishment</div>
             <span class="rule-card-chevron">▼</span>
@@ -690,9 +708,6 @@
           </div>
         </div>
 
-        <div style="grid-column: 1 / -1; text-align: center; margin-top: 8px;">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAMIYVoW99iiCiexn3ugDkfGznnaZidL1L6bLLV06lLQMgJg/viewform?usp=publish-editor" target="_blank" rel="noopener" class="btn primary">📬 Propose a Rule Change</a>
-        </div>
 
       </div><!-- end rules-grid -->
     </section>
