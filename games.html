@@ -262,7 +262,7 @@
   /* ── GAME CARDS ───────────────────────────────────── */
   .games-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 20px;
   }
 
@@ -436,11 +436,8 @@
 <nav class="nav" aria-label="Main navigation">
   <a href="/index.html" class="nav-logo">🏀 WEHA 07 BOYOZ</a>
   <div class="nav-links">
-    <a href="/rules.html">📋 Rules</a>
-    <a href="/play.html">Guess Who?</a>
     <a href="/index.html#league-section">The League</a>
-    <a href="/index.html#history-section">Champions</a>
-    <a href="/index.html#wingmasters-section">Wingmasters</a>
+    <a href="/rules.html">📋 Rules</a>
     <a href="/games.html" class="active">🎮 Games</a>
   </div>
   <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle light/dark mode">🌙</button>
@@ -449,11 +446,8 @@
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
-  <a href="/rules.html">📋 Rules</a>
-  <a href="/play.html">Guess Who?</a>
   <a href="/index.html#league-section">The League</a>
-  <a href="/index.html#history-section">Champions</a>
-  <a href="/index.html#wingmasters-section">Wingmasters</a>
+  <a href="/rules.html">📋 Rules</a>
   <a href="/games.html">🎮 Games</a>
   <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Toggle light/dark mode" style="align-self:flex-start">🌙</button>
 </div>
@@ -463,6 +457,7 @@
   <a href="/play.html">🧩 Guess Who?</a>
   <a href="/quiz.html">😜 Quiz</a>
   <a href="/wheel.html">🎡 Wheel</a>
+  <a href="/starting5jollies.html">5️⃣ Starting 5</a>
 </div>
 
 <!-- HERO -->
@@ -501,6 +496,14 @@
           <div class="game-card-title">Championship Decider</div>
           <p class="game-card-desc">Can't settle an argument? Let fate spin the answer.</p>
           <a href="/wheel.html" class="btn primary" style="background:var(--gold);color:#0D1117">Spin</a>
+        </div>
+
+        <div class="game-card">
+          <div class="game-card-bar" style="background:#3b82f6"></div>
+          <div class="game-card-icon">5️⃣</div>
+          <div class="game-card-title">Starting 5 Jollies</div>
+          <p class="game-card-desc">Build your all-time starting 5 from WeHa legends. Pick your squad, defend your choices.</p>
+          <a href="/starting5jollies.html" class="btn primary" style="background:#3b82f6">Build Lineup</a>
         </div>
 
       </div>

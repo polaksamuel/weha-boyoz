@@ -96,6 +96,11 @@
     background: rgba(249, 115, 22, 0.08);
   }
 
+  .nav-links a.active {
+    color: var(--accent);
+    border-color: rgba(249, 115, 22, 0.45);
+  }
+
   .hamburger {
     display: none;
     background: none;
@@ -547,6 +552,48 @@
 
   .stats-table tbody tr:last-child td { border-bottom: none; }
 
+  /* ── JUMP-TO CHIPS ───────────────────────────────── */
+  .jump-to {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 20px 8px;
+    margin-top: -8px;
+    background: var(--bg);
+  }
+
+  .jump-to a {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    text-decoration: none;
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .jump-to a:hover {
+    color: var(--accent);
+    border-color: rgba(249, 115, 22, 0.45);
+    background: rgba(249, 115, 22, 0.08);
+  }
+
+  html[data-theme="light"] .jump-to a {
+    color: var(--muted);
+    border-color: rgba(0,0,0,0.15);
+  }
+
+  html[data-theme="light"] .jump-to a:hover {
+    color: var(--accent);
+    border-color: rgba(200,16,46,0.35);
+    background: rgba(200,16,46,0.08);
+  }
+
   /* ── FOOTER ───────────────────────────────────────── */
   footer {
     text-align: center;
@@ -703,12 +750,9 @@
 <nav class="nav" aria-label="Main navigation">
   <a href="#top" class="nav-logo">🏀 WEHA 07 BOYOZ</a>
   <div class="nav-links">
+    <a href="#league-section" class="active">The League</a>
     <a href="/rules.html">📋 Rules</a>
-    <a href="/play.html">Guess Who?</a>
-    <a href="#league-section">The League</a>
-    <a href="#history-section">Champions</a>
-    <a href="#wingmasters-section">Wingmasters</a>
-    <a href="/games.html">Games</a>
+    <a href="/games.html">🎮 Games</a>
   </div>
   <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle light/dark mode">🌙</button>
   <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">☰</button>
@@ -716,12 +760,9 @@
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
-  <a href="/rules.html">📋 Rules</a>
-  <a href="/play.html">Guess Who?</a>
   <a href="#league-section">The League</a>
-  <a href="#history-section">Champions</a>
-  <a href="#wingmasters-section">Wingmasters</a>
-  <a href="/games.html">Games</a>
+  <a href="/rules.html">📋 Rules</a>
+  <a href="/games.html">🎮 Games</a>
   <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Toggle light/dark mode" style="align-self:flex-start">🌙</button>
 </div>
 
@@ -737,6 +778,13 @@
     </div>
   </div>
 </header>
+
+<!-- JUMP-TO CHIPS -->
+<nav class="jump-to" aria-label="Jump to section">
+  <a href="#league-section">🏀 Roster</a>
+  <a href="#history-section">🏆 Champions</a>
+  <a href="#wingmasters-section">🍗 Wingmasters</a>
+</nav>
 
 <main>
   <div class="container">

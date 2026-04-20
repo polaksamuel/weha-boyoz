@@ -4,7 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>🧩 Guess Who?</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<script>
+  (function() {
+    if (localStorage.getItem('theme') !== 'dark')
+      document.documentElement.setAttribute('data-theme', 'light');
+  })();
+</script>
 <style>
   :root{ --bg:#0b0e1a; --ink:#e9ecff; --card:#131735; --rim:#2b3170; --brand:#38d3ff; --good:#25d366; --bad:#ff5a66; }
   *{box-sizing:border-box}
@@ -34,7 +40,7 @@
   /* ── GAMES SUB-NAV ────────────────────────────────── */
   .games-subnav {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: 57px; left: 0; right: 0;
     z-index: 100;
     background: #0f1430;
     border-bottom: 1px solid #2b3170;
@@ -66,16 +72,89 @@
     background: rgba(56,211,255,0.1);
   }
 
-  body { padding-top: 60px; }
+  body { padding-top: 101px; }
+
+  /* ── SITE NAV ─────────────────────────────────────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px;
+    background: rgba(8, 11, 20, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; color: #f97316; letter-spacing: 1px; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 6px; align-items: center; }
+  .nav-links a {
+    padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.08);
+    color: #8896b3; font-size: 0.82rem; font-weight: 600;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    min-height: 34px; display: inline-flex; align-items: center; text-decoration: none;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: #f97316; border-color: rgba(249,115,22,0.45); background: rgba(249,115,22,0.08);
+  }
+  .nav-hamburger {
+    display: none; background: none; border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px; padding: 8px 11px; cursor: pointer; color: #e9ecff;
+    font-size: 1.1rem; min-height: 44px; min-width: 44px;
+    align-items: center; justify-content: center;
+  }
+  .nav-mobile {
+    display: none; position: fixed; top: 57px; left: 0; right: 0;
+    background: #0f1420; border-bottom: 1px solid rgba(255,255,255,0.08);
+    z-index: 99; padding: 12px 20px 16px; flex-direction: column; gap: 8px;
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a {
+    padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);
+    color: #8896b3; font-weight: 600; min-height: 44px; display: flex; align-items: center;
+    transition: color 0.2s, background 0.2s; font-size: 0.95rem; text-decoration: none;
+  }
+  .nav-mobile a:hover { color: #f97316; background: rgba(249,115,22,0.08); }
+  .nav-theme {
+    background: none; border: 1px solid rgba(255,255,255,0.08); border-radius: 999px;
+    padding: 7px 12px; cursor: pointer; font-size: 1.05rem;
+    min-height: 44px; min-width: 44px; display: inline-flex; align-items: center;
+    justify-content: center; transition: background 0.2s; line-height: 1; color: #8896b3;
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+  }
 </style>
 </head>
 <body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="/index.html" class="nav-logo">🏀 WEHA 07 BOYOZ</a>
+  <div class="nav-links">
+    <a href="/index.html#league-section">The League</a>
+    <a href="/rules.html">📋 Rules</a>
+    <a href="/games.html" class="active">🎮 Games</a>
+  </div>
+  <button class="nav-theme" id="nav-theme-btn" aria-label="Toggle light/dark mode">🌙</button>
+  <button class="nav-hamburger" id="nav-hamburger-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile" id="nav-mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="/index.html#league-section">The League</a>
+  <a href="/rules.html">📋 Rules</a>
+  <a href="/games.html">🎮 Games</a>
+</div>
 
 <!-- GAMES SUB-NAV -->
 <div class="games-subnav">
   <a href="/play.html" class="active">🧩 Guess Who?</a>
   <a href="/quiz.html">😜 Quiz</a>
   <a href="/wheel.html">🎡 Wheel</a>
+  <a href="/starting5jollies.html">5️⃣ Starting 5</a>
 </div>
 
 <div class="wrap">
@@ -466,6 +545,34 @@ if (isDev){
 /* =============== Utils =============== */
 function escapeHtml(s){return (s||'').replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
 window.addEventListener('resize', draw);
+</script>
+
+<script>
+  /* ── Nav hamburger + theme toggle ─────────────────── */
+  const navHamburger = document.getElementById('nav-hamburger-btn');
+  const navMobile = document.getElementById('nav-mobile-menu');
+  navHamburger.addEventListener('click', () => {
+    const open = navMobile.classList.toggle('open');
+    navHamburger.setAttribute('aria-expanded', String(open));
+    navHamburger.textContent = open ? '✕' : '☰';
+  });
+  navMobile.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navMobile.classList.remove('open');
+      navHamburger.setAttribute('aria-expanded', 'false');
+      navHamburger.textContent = '☰';
+    });
+  });
+  document.getElementById('nav-theme-btn').addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.removeItem('theme');
+    }
+  });
 </script>
 </body>
 </html>
