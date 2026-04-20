@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WeHa 07 Boyoz – League Rules</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<script>
+  (function() {
+    if (localStorage.getItem('theme') !== 'dark')
+      document.documentElement.setAttribute('data-theme', 'light');
+  })();
+</script>
+
+<style>
+  :root {
+    --bg: #080b14;
+    --surface: #0f1420;
+    --surface-raised: #141a2e;
+    --border: rgba(255,255,255,0.08);
+    --ink: #f0f4ff;
+    --muted: #8896b3;
+    --accent: #f97316;
+    --gold: #fbbf24;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Poppins, system-ui, sans-serif;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── NAV ──────────────────────────────────────────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px;
+    background: rgba(8, 11, 20, 0.90);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex; gap: 6px; align-items: center;
+  }
+
+  .nav-links a {
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    min-height: 34px;
+    display: inline-flex; align-items: center;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+    border-color: rgba(249, 115, 22, 0.45);
+    background: rgba(249, 115, 22, 0.08);
+  }
+
+  .nav-links a.active {
+    color: var(--accent);
+    border-color: rgba(249, 115, 22, 0.45);
+  }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 11px;
+    cursor: pointer;
+    color: var(--ink);
+    font-size: 1.1rem;
+    min-height: 44px; min-width: 44px;
+    align-items: center; justify-content: center;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 57px; left: 0; right: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    padding: 12px 20px 16px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-weight: 600;
+    min-height: 44px;
+    display: flex; align-items: center;
+    transition: color 0.2s, background 0.2s;
+    font-size: 0.95rem;
+  }
+
+  .mobile-menu a:hover {
+    color: var(--accent);
+    background: rgba(249, 115, 22, 0.08);
+  }
+
+  /* ── HERO ─────────────────────────────────────────── */
+  .hero {
+    padding-top: 120px;
+    padding-bottom: 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 59px,
+        rgba(255,255,255,0.025) 60px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 59px,
+        rgba(255,255,255,0.025) 60px
+      ),
+      var(--bg);
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px; height: 320px;
+    border: 1px solid rgba(255,255,255,0.035);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-inner { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(54px, 10vw, 104px);
+    line-height: 1;
+    letter-spacing: 3px;
+    color: var(--ink);
+    text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: clamp(15px, 2vw, 18px);
+    margin-top: 10px;
+  }
+
+  /* ── SECTION LAYOUT ───────────────────────────────── */
+  main { background: var(--bg); }
+  section { padding: 60px 0; }
+
+  .section-header { text-align: center; margin-bottom: 34px; }
+
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: 1.5px;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  .section-header p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ── LEAGUE RULES ─────────────────────────────────── */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .rule-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .rule-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    cursor: pointer;
+    user-select: none;
+    gap: 12px;
+    min-height: 60px;
+  }
+
+  .rule-card-header:hover {
+    background: rgba(249,115,22,0.05);
+  }
+
+  .rule-card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
+    color: var(--ink);
+  }
+
+  .rule-card-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .rule-card-chevron {
+    color: var(--muted);
+    font-size: 0.75rem;
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+
+  .rule-card.open .rule-card-chevron { transform: rotate(180deg); }
+
+  .rule-card-body {
+    display: none;
+    padding: 0 20px 18px;
+    border-top: 1px solid var(--border);
+  }
+
+  .rule-card.open .rule-card-body { display: block; }
+
+  .rule-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rule-list li {
+    padding: 9px 0;
+    font-size: 0.88rem;
+    color: var(--ink);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    line-height: 1.55;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  html[data-theme="light"] .rule-list li {
+    border-bottom-color: rgba(0,0,0,0.06);
+  }
+
+  .rule-list li:last-child { border-bottom: none; }
+
+  .rule-bullet {
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .rule-sub {
+    margin: 4px 0 0 20px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .rule-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-right: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .rule-tag.orange { background: rgba(249,115,22,0.15); color: var(--accent); border: 1px solid rgba(249,115,22,0.3); }
+  .rule-tag.gold   { background: rgba(251,191,36,0.12); color: var(--gold);   border: 1px solid rgba(251,191,36,0.3); }
+  .rule-tag.purple { background: rgba(168,85,247,0.12); color: #c084fc;       border: 1px solid rgba(168,85,247,0.25); }
+
+  .payout-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 0.88rem;
+  }
+
+  html[data-theme="light"] .payout-row {
+    border-bottom-color: rgba(0,0,0,0.06);
+  }
+
+  .payout-row:last-child { border-bottom: none; }
+
+  .payout-label { color: var(--muted); }
+  .payout-value { font-weight: 700; color: var(--gold); font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.5px; }
+
+  .lottery-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 0;
+    font-size: 0.88rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  html[data-theme="light"] .lottery-bar {
+    border-bottom-color: rgba(0,0,0,0.06);
+  }
+
+  .lottery-bar:last-child { border-bottom: none; }
+
+  .lottery-rank {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    color: var(--muted);
+    width: 20px;
+    flex-shrink: 0;
+  }
+
+  .lottery-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  html[data-theme="light"] .lottery-track { background: rgba(0,0,0,0.08); }
+
+  .lottery-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+
+  .lottery-pct {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--accent);
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .lottery-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  footer a { color: var(--accent); }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 768px) {
+    .rules-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 44px 0; }
+  }
+
+  /* ── THEME TOGGLE BUTTON ──────────────────────── */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    min-height: 44px; min-width: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+    line-height: 1;
+    color: var(--muted);
+  }
+
+  .theme-toggle:hover {
+    background: rgba(249,115,22,0.08);
+    border-color: rgba(249,115,22,0.45);
+  }
+
+  /* ── LIGHT MODE ───────────────────────────────── */
+  html[data-theme="light"] {
+    --bg: #E8C87A;
+    --surface: #FBF3DC;
+    --surface-raised: #F5E8C0;
+    --border: rgba(0,0,0,0.10);
+    --ink: #0D1117;
+    --muted: #7A4F1A;
+    --accent: #C8102E;
+    --gold: #B8730A;
+  }
+
+  html[data-theme="light"] .nav {
+    background: rgba(184,115,42,0.95);
+    border-bottom: 2px solid #C8102E;
+  }
+
+  html[data-theme="light"] .nav-logo { color: #fff; }
+
+  html[data-theme="light"] .nav-links a {
+    color: rgba(255,255,255,0.85);
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  html[data-theme="light"] .nav-links a:hover,
+  html[data-theme="light"] .nav-links a.active {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  html[data-theme="light"] .theme-toggle {
+    border-color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.85);
+  }
+
+  html[data-theme="light"] .theme-toggle:hover {
+    background: rgba(255,255,255,0.15);
+  }
+
+  html[data-theme="light"] .hero {
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(0,0,0,0) 0px, rgba(0,0,0,0) 58px,
+        rgba(139,80,20,0.12) 58px, rgba(139,80,20,0.12) 60px
+      ),
+      repeating-linear-gradient(
+        180deg,
+        rgba(0,0,0,0) 0px, rgba(0,0,0,0) 118px,
+        rgba(139,80,20,0.06) 118px, rgba(139,80,20,0.06) 120px
+      ),
+      var(--bg);
+  }
+
+  html[data-theme="light"] .hero-title { color: #0D1117; }
+  html[data-theme="light"] .hero-eyebrow,
+  html[data-theme="light"] .hero-sub { color: var(--muted); }
+
+  html[data-theme="light"] .section-header h2 { color: #0D1117; }
+
+  html[data-theme="light"] footer {
+    background: #D4A84A;
+    color: rgba(0,0,0,0.7);
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  html[data-theme="light"] .mobile-menu { background: #D4A84A; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <a href="/index.html" class="nav-logo">🏀 WEHA 07 BOYOZ</a>
+  <div class="nav-links">
+    <a href="/rules.html" class="active">📋 Rules</a>
+    <a href="/play.html">Guess Who?</a>
+    <a href="/index.html#league-section">The League</a>
+    <a href="/index.html#history-section">Champions</a>
+    <a href="/index.html#wingmasters-section">Wingmasters</a>
+    <a href="/games.html">Games</a>
+  </div>
+  <button class="theme-toggle" id="theme-toggle-btn" aria-label="Toggle light/dark mode">🌙</button>
+  <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="/rules.html">📋 Rules</a>
+  <a href="/play.html">Guess Who?</a>
+  <a href="/index.html#league-section">The League</a>
+  <a href="/index.html#history-section">Champions</a>
+  <a href="/index.html#wingmasters-section">Wingmasters</a>
+  <a href="/games.html">Games</a>
+  <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Toggle light/dark mode" style="align-self:flex-start">🌙</button>
+</div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-inner container">
+    <span class="hero-eyebrow">📋 Sacred Laws</span>
+    <h1 class="hero-title">League Rules</h1>
+    <p class="hero-sub">Know them or suffer the consequences.</p>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <section>
+      <div class="rules-grid">
+
+        <!-- KEEPERS -->
+        <div class="rule-card open">
+          <div class="rule-card-header" onclick="toggleRule(this)">
+            <div class="rule-card-title"><span class="rule-card-icon">🔒</span> Keepers</div>
+            <span class="rule-card-chevron">▼</span>
+          </div>
+          <div class="rule-card-body">
+            <ul class="rule-list">
+              <li><span class="rule-bullet">›</span><span>Teams can keep a player for a <strong>maximum of 4 years in a row</strong>.</span></li>
+              <li><span class="rule-bullet">›</span><span>Waiver wire adds count as an <strong>11th round pick</strong> for keeper purposes.</span></li>
+              <li><span class="rule-bullet">›</span><span>Players can be kept in <strong>Round 3</strong> or later.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TRADES -->
+        <div class="rule-card open">
+          <div class="rule-card-header" onclick="toggleRule(this)">
+            <div class="rule-card-title"><span class="rule-card-icon">🤝</span> Trades</div>
+            <span class="rule-card-chevron">▼</span>
+          </div>
+          <div class="rule-card-body">
+            <ul class="rule-list">
+              <li><span class="rule-bullet">›</span><span>Trading away a <strong>1st round pick player</strong> → the trading team forfeits <strong>2 keeper slots</strong>.</span></li>
+              <li><span class="rule-bullet">›</span><span>Trading away a <strong>2nd round pick player</strong> → the trading team forfeits <strong>1 keeper slot</strong>.</span></li>
+              <li><span class="rule-bullet">›</span><span>If there is a <strong>≤15 pick difference</strong> between the two players in the trade, only <strong>1 keeper slot is forfeited</strong> total (e.g. trading a 2nd-round player within 15 picks → no slot forfeited).</span></li>
+              <li><span class="rule-bullet">›</span><span><strong>Injured players cannot be used as trade chips.</strong></span></li>
+              <li><span class="rule-bullet">›</span><span>During the draft, picks <strong>within the same draft year</strong> can be traded without penalty.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TRANSACTIONS -->
+        <div class="rule-card">
+          <div class="rule-card-header" onclick="toggleRule(this)">
+            <div class="rule-card-title"><span class="rule-card-icon">🔄</span> Transactions</div>
+            <span class="rule-card-chevron">▼</span>
+          </div>
+          <div class="rule-card-body">
+            <ul class="rule-list">
+              <li><span class="rule-bullet">›</span><span><strong>Maximum of 5 waiver transactions per week.</strong></span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TIE-BREAKERS -->
+        <div class="rule-card">
+          <div class="rule-card-header" onclick="toggleRule(this)">
+            <div class="rule-card-title"><span class="rule-card-icon">⚖️</span> Tie-Breakers</div>
+            <span class="rule-card-chevron">▼</span>
+          </div>
+          <div class="rule-card-body">
+            <ul class="rule-list">
+              <li><span class="rule-bullet">1</span><span>Head-to-head matchup result</span></li>
+              <li><span class="rule-bullet">2</span><span>Total categories won</span></li>
+              <li><span class="rule-bullet">3</span><span>Score against other teams the week you tied</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- BUY-IN & PAYOUT -->
+        <div class="rule-card">
+          <div class="rule-card-header" onclick="toggleRule(this)">
+            <div class="rule-card-title"><span class="rule-card-icon">💰</span> Buy-In &amp; Payout</div>
+            <span class="rule-card-chevron">▼</span>
+          </div>
+          <div class="rule-card-body">
+            <div class="payout-row"><span class="payout-label">League buy-in</span><span class="payout-value">$75</span></div>
+            <div class="payout-row"><span class="payout-label">Website fee</span><span class="payout-value">$2</span></div>
+            <div class="payout-row"><span class="payout-label">🥇 1st Place</span><span class="payout-value">60%</span></div>
+            <div class="payout-row"><span class="payout-label">🥈 2nd Place</span><span class="payout-value">20%</span></div>
+            <div class="payout-row"><span class="payout-label">🏅 Regular Season Winner</span><span class="payout-value">20%</span></div>
+          </div>
+        </div>
+
+        <!-- LOTTERY -->
+        <div class="rule-card">
+          <div class="rule-card-header" onclick="toggleRule(this)">
+            <div class="rule-card-title"><span class="rule-card-icon">🎰</span> Draft Lottery</div>
+            <span class="rule-card-chevron">▼</span>
+          </div>
+          <div class="rule-card-body">
+            <p style="font-size:0.8rem;color:var(--muted);margin-bottom:12px">Held at <a href="http://www.draftpicklottery.com" target="_blank" rel="noopener">draftpicklottery.com</a></p>
+            <div class="lottery-bar"><span class="lottery-rank">1</span><div class="lottery-track"><div class="lottery-fill" style="width:100%"></div></div><span class="lottery-pct">24%</span><span class="lottery-note"></span></div>
+            <div class="lottery-bar"><span class="lottery-rank">2</span><div class="lottery-track"><div class="lottery-fill" style="width:87%"></div></div><span class="lottery-pct">21%</span><span class="lottery-note"></span></div>
+            <div class="lottery-bar"><span class="lottery-rank">3</span><div class="lottery-track"><div class="lottery-fill" style="width:79%"></div></div><span class="lottery-pct">19%</span><span class="lottery-note"></span></div>
+            <div class="lottery-bar"><span class="lottery-rank">4</span><div class="lottery-track"><div class="lottery-fill" style="width:67%"></div></div><span class="lottery-pct">16%</span><span class="lottery-note"></span></div>
+            <div class="lottery-bar"><span class="lottery-rank">5</span><div class="lottery-track"><div class="lottery-fill" style="width:42%"></div></div><span class="lottery-pct">10%</span><span class="lottery-note" style="font-size:0.72rem;color:var(--muted)">Worse record (1st out)</span></div>
+            <div class="lottery-bar"><span class="lottery-rank">6</span><div class="lottery-track"><div class="lottery-fill" style="width:42%"></div></div><span class="lottery-pct">10%</span><span class="lottery-note" style="font-size:0.72rem;color:var(--muted)">Better record (2nd out)</span></div>
+          </div>
+        </div>
+
+        <!-- TOILET BOWL -->
+        <div class="rule-card">
+          <div class="rule-card-header" onclick="toggleRule(this)">
+            <div class="rule-card-title"><span class="rule-card-icon">🚽</span> Toilet Bowl</div>
+            <span class="rule-card-chevron">▼</span>
+          </div>
+          <div class="rule-card-body">
+            <ul class="rule-list">
+              <li><span class="rule-bullet">›</span><span>Bottom 4 teams compete in a <strong>losers bracket</strong>.</span></li>
+              <li><span class="rule-bullet">›</span><span>The two losers from Round 1 face off in the <strong>Toilet Bowl Championship</strong>.</span></li>
+              <li><span class="rule-bullet">›</span><span>Loser of the Toilet Bowl receives <strong>the punishment</strong>.</span></li>
+              <li><span class="rule-bullet">›</span><span>If your team wins the Toilet Bowl, you <strong>can no longer make pickups</strong> for the rest of the season.</span></li>
+              <li><span class="rule-bullet">›</span><span>Winner of the Toilet Bowl gets the <strong>2nd-best lottery odds</strong>.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- PUNISHMENT -->
+        <div class="rule-card">
+          <div class="rule-card-header" onclick="toggleRule(this)">
+            <div class="rule-card-title"><span class="rule-card-icon">🌶️</span> Punishment</div>
+            <span class="rule-card-chevron">▼</span>
+          </div>
+          <div class="rule-card-body">
+            <ul class="rule-list">
+              <li><span class="rule-bullet">›</span><span>The league votes on the punishment for the season.</span></li>
+              <li><span class="rule-bullet">›</span><span>Loser picks from a list of <strong>3 options</strong> determined by the league.</span></li>
+              <li><span class="rule-bullet">›</span><span><strong>Default punishment</strong> is the Hot Ones challenge. The loser can propose an alternative — everyone votes yes or no.</span></li>
+              <li><span class="rule-bullet">›</span><span><span class="rule-tag gold">2023</span> Do the Hot Ones challenge <em>or</em> lose a 1st round pick — must be completed before the 2024 draft.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- DRAFT DAY -->
+        <div class="rule-card" style="grid-column: 1 / -1;">
+          <div class="rule-card-header" onclick="toggleRule(this)">
+            <div class="rule-card-title"><span class="rule-card-icon">📅</span> Draft Day</div>
+            <span class="rule-card-chevron">▼</span>
+          </div>
+          <div class="rule-card-body">
+            <ul class="rule-list">
+              <li><span class="rule-bullet">›</span><span>The draft takes place every year <strong>two Saturdays before the NBA season starts</strong> (scheduled to avoid Noa's birthday).</span></li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- end rules-grid -->
+    </section>
+  </div>
+</main>
+
+<footer>
+  Built with ❤️ on GitHub Pages and Sagu Polate &bull; <a href="https://weha07boyoz.com">weha07boyoz.com</a>
+</footer>
+
+<script>
+  /* ── Hamburger menu ─────────────────────────────── */
+  const hamburger = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.textContent = open ? '✕' : '☰';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.textContent = '☰';
+    });
+  });
+
+  /* ── Theme toggle ───────────────────────────────── */
+  function updateToggleButtons() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+      btn.textContent = isLight ? '🌙' : '☀️';
+    });
+  }
+
+  function toggleTheme() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.removeItem('theme');
+    }
+    updateToggleButtons();
+  }
+
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    btn.addEventListener('click', toggleTheme);
+  });
+  updateToggleButtons();
+
+  /* ── Rules accordion ─────────────────────────────── */
+  function toggleRule(header) {
+    const card = header.closest('.rule-card');
+    card.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
